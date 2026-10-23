@@ -206,6 +206,7 @@ MonoBehaviour:
   - {fileID: 65260648}
   spawnTime: 1.5
   maxZombies: 10
+  barrier: {fileID: 0}
   activationDistance: 25
 --- !u!4 &93482530 stripped
 Transform:
@@ -1242,6 +1243,7 @@ MonoBehaviour:
   - {fileID: 1007781717}
   spawnTime: 1.5
   maxZombies: 10
+  barrier: {fileID: 0}
   activationDistance: 25
 --- !u!1001 &1016589647
 PrefabInstance:
@@ -2050,6 +2052,7 @@ MonoBehaviour:
   - {fileID: 1414871758}
   spawnTime: 1.5
   maxZombies: 10
+  barrier: {fileID: 0}
   activationDistance: 25
 --- !u!4 &1414871758 stripped
 Transform:
@@ -2221,6 +2224,7 @@ MonoBehaviour:
   - {fileID: 1490695941}
   spawnTime: 1.5
   maxZombies: 10
+  barrier: {fileID: 0}
   activationDistance: 25
 --- !u!1 &1694795684 stripped
 GameObject:
@@ -2665,6 +2669,7 @@ MonoBehaviour:
   - {fileID: 2072336174}
   spawnTime: 1.5
   maxZombies: 10
+  barrier: {fileID: 0}
   activationDistance: 25
 --- !u!1001 &2080814913
 PrefabInstance:
@@ -2836,11 +2841,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2206104355004806732, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -350.102
+      value: -234.9
       objectReference: {fileID: 0}
     - target: {fileID: 2206104355004806732, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.692474
+      value: 10.7
       objectReference: {fileID: 0}
     - target: {fileID: 2206104355004806732, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2996,7 +3001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6803972729070696194, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8445708476354419195, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: m_SortingLayer
@@ -3043,6 +3048,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 982679866011466088, guid: 95231bcfeb7388a499a1adb1864834c0, type: 3}
+      propertyPath: 'spawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1414871758}
     - target: {fileID: 6297181194688750132, guid: 95231bcfeb7388a499a1adb1864834c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -199.5
