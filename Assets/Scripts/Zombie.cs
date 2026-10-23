@@ -1,79 +1,80 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Zombie : MonoBehaviour
 {
-    public Transform target;
-
+    [Header("Stats")]
     public int damage = 5;
-    public float followSpeed = 20f;
-    public float Health = 10f;
+    public int health = 10;
+    public float moveSpeed = 3f;
+    public float stopDistance = 1f;
 
-    public float jumpForce = 17.5f;
-
-    private Rigidbody2D rig;
-    private bool isGrounded;
-
-    private float facingDirection = 1f;
-    private float jumpCooldown = 0.5f;
-    private float nextJumpTime;
-
-    private void OnEnable()
-    {
-        Playerscript.Death += Stopfollowing;
-    }
-
-    private void OnDisable()
-    {
-        Playerscript.Death -= Stopfollowing;
-    }
-
-    private void Stopfollowing()
-    {
-        target = null;
-
-        if (rig != null)
-        {
-            rig.linearVelocity = Vector2.zero;
-        }
-    }
+    private Rigidbody2D rb;
+    private Playerscript player;
 
     private void Start()
     {
-        rig = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            player = playerObject.GetComponent<Playerscript>();
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (target == null)
+        if (player == null || player.IsDead)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
+        float distance =
+            player.transform.position.x - transform.position.x;
+
+        if (Mathf.Abs(distance) > stopDistance)
+        {
+            float direction = Mathf.Sign(distance);
+
+            rb.linearVelocity = new Vector2(
+                direction * moveSpeed,
+                rb.linearVelocity.y
+            );
+
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x) * direction;
+            transform.localScale = scale;
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(
+                0,
+                rb.linearVelocity.y
+            );
+        }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (player == null)
             return;
 
-        float distanceX = target.position.x - transform.position.x;
-
-        // Follow player
-        rig.linearVelocity = new Vector2(
-            facingDirection * followSpeed,
-            rig.linearVelocity.y
-        );
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-
-        if (collision.gameObject.TryGetComponent<Playerscript>(out var player))
+        if (collision.gameObject.CompareTag("Player"))
         {
             player.Damage(damage);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
         }
     }
 }

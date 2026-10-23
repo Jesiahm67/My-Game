@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
@@ -7,6 +8,7 @@ public class ZombieSpawner : MonoBehaviour
 
     public float spawnTime = 1.5f;
     public int maxZombies = 10;
+    public Transform barrier;
 
     // Distance at which spawning becomes active
     public float activationDistance = 25f;
@@ -28,8 +30,12 @@ public class ZombieSpawner : MonoBehaviour
 
     void Update()
     {
-        if (player == null)
-            return;
+        if (player == null && barrier != null)
+        {
+            barrier.position = player.position;
+
+            barrier.localScale = new Vector2(50f, 50f);
+        }
 
         timer -= Time.deltaTime;
 

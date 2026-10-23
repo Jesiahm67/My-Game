@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 673469830539556219}
   - component: {fileID: 6878807716663412076}
-  - component: {fileID: 8200323442676067990}
-  - component: {fileID: 4098526577317645664}
   - component: {fileID: 2118481311551877603}
-  m_Layer: 6
+  - component: {fileID: 4098526577317645664}
+  - component: {fileID: 8200323442676067990}
+  m_Layer: 10
   m_Name: Zombie_0
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6019453725058403666, guid: 80c8d94a81d7bac46b754a122ffa9e72, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.57, y: 2.86}
@@ -94,23 +94,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &8200323442676067990
-MonoBehaviour:
+--- !u!50 &2118481311551877603
+Rigidbody2D:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4753505186210618731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af2099b617fe2d44cb287507a590191c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Follow
-  target: {fileID: 2206104355004806732, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
-  damage: 5
-  followSpeed: 10
-  Health: 10
-  jumpForce: 17.5
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!61 &4098526577317645664
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -121,7 +131,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 27d960afbd61b834182c9c76ddfe0a1f, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -157,30 +167,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.57, y: 2.86}
   m_EdgeRadius: 0
---- !u!50 &2118481311551877603
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!114 &8200323442676067990
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4753505186210618731}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 27d960afbd61b834182c9c76ddfe0a1f, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2099b617fe2d44cb287507a590191c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Follow
+  damage: 5
+  health: 10
+  moveSpeed: 15
+  stopDistance: 1
