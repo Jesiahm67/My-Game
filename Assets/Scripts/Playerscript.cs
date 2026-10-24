@@ -14,9 +14,9 @@ public class Playerscript : MonoBehaviour
     // Displays the player's health on screen
     public TextMeshPro Healthtext;
 
-    // =========================
+
     // Health
-    // =========================
+
     [Header("Health")]
     public int Maximum_health = 100;
     public int health;
@@ -24,17 +24,16 @@ public class Playerscript : MonoBehaviour
     // Prevents movement and actions after death
     public bool IsDead { get; private set; }
 
-    // =========================
     // Sprites
-    // =========================
+
     [Header("Components")]
     public SpriteRenderer SR;
     public SpriteRenderer GunSR;
 
 
-    // =========================
+
     // Movement Section
-    // =========================
+
     [Header("Movement")]
     public float maxSpeed = 15f;
     public float speed;
@@ -42,16 +41,16 @@ public class Playerscript : MonoBehaviour
     // Sprint speed multiplier
     public float sprintMultiplier = 2f;
 
-    // =========================
+
     // Jumping Section
-    // =========================
+
     [Header("Jumping")]
     public float maxJumpingForce = 17.5f;
     public float jumpingForce;
 
-    // =========================
+
     // Cloud Bounce Section
-    // =========================
+
     [Header("Cloud Bounce")]
     public float CloudFloatingForce;
     public float cloudFloatingDuation;
@@ -59,9 +58,8 @@ public class Playerscript : MonoBehaviour
     private float floatTimer;
     private Vector2 targetPosition;
 
-    // =========================
+
     // Gun
-    // =========================
     [Header("Pistol")]
     public GameObject bulletPrefab;
     public Transform gun;
@@ -237,6 +235,7 @@ public class Playerscript : MonoBehaviour
     }
 
     // Creates a bullet and fires it to it's target
+    //Fine Damage limit for zombies
     private void Shoot()
     {
         if (bulletPrefab == null || gun == null)
@@ -258,14 +257,14 @@ public class Playerscript : MonoBehaviour
 
         if (bulletRb != null)
         {
-            //Horizontal Velocity/speed//
+            //Horizontal Velocity/speed //
             bulletRb.linearVelocity = new Vector2(
                 direction * bulletSpeed,
                 0f);// Means no vertical movement//
             //Add vertical movement later//
         }
 
-        // flip the bullet sprite//
+        // flips the bullet sprite dependeing on player x axis
         SpriteRenderer bulletSprite = bullet.GetComponent<SpriteRenderer>();
 
         if (bulletSprite != null)

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6297181194688750132}
   - component: {fileID: 1809115377296310193}
   - component: {fileID: 982679866011466088}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -199.5, y: 11.7, z: 0}
-  m_LocalScale: {x: 20, y: 30, z: 1}
+  m_LocalScale: {x: 30, y: 45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4329991577843148614}
@@ -106,16 +106,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
   zombiePrefab: {fileID: 4753505186210618731, guid: 5af03a05ab09a4e4f97ace04b4c8ba7b, type: 3}
+  GiantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
   spawnPoints:
   - {fileID: 6297181194688750132}
   - {fileID: 6297181194688750132}
   - {fileID: 6297181194688750132}
   - {fileID: 6297181194688750132}
   - {fileID: 6297181194688750132}
-  spawnTime: 1.5
-  maxZombies: 10
+  spawnTime: 1
+  maxZombies: 5
+  zombiesPerPortal: 10
   barrier: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
-  activationDistance: 25
+  activationDistance: 60
 --- !u!1001 &3396714873958261567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,6 +169,10 @@ PrefabInstance:
     - target: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_Name
       value: SpawnerRadius
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
