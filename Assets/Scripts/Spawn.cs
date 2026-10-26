@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
@@ -8,33 +9,31 @@ public class ZombieSpawner : MonoBehaviour
     public Transform[] spawnPoints;
 
     //Time it takes for zombies to spawn from portals
-    public float spawnTime = 1.5f;
+    public float spawnTime = .5f;
 
     public int maxZombies = 10;
 
     // Number of zombies a portal can spawn before disappearing
     public int zombiesPerPortal = 10;
 
-    public Transform barrier;
     // Distance when the portals chooses to spawn zombies
-    public float activationDistance = 160f;
+    public float activationDistance = 35f;
 
     private float timer;
     private Transform player;
+    private int[] portalZombieSpawnCount;
+    private bool[] portalClosed;// Sees if portal is closed
     private bool giantZombieSpawned = false;
-
-    private int[] portalSpawnCount;
-    private bool[] portalClosed;
+    private bool playerEnteredSpawner = false;// Determines if the player is inside the spawnarea
 
     void Start()
     {
         timer = spawnTime;
 
-        portalSpawnCount = new int[spawnPoints.Length];
+        portalZombieSpawnCount = new int[spawnPoints.Length];
         portalClosed = new bool[spawnPoints.Length];
-
-        GameObject playerObject =
-            GameObject.FindGameObjectWithTag("Player");
+        //Uses player tag to find the player
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         if (playerObject != null)
         {
@@ -44,40 +43,50 @@ public class ZombieSpawner : MonoBehaviour
 
     void Update()
     {
-        // Follow the player WITHOUT changing size
-        if (player != null && barrier != null)
-        {
-            barrier.position = player.position;
-        }
+        //Stops spawning if the player is not in the spawnradius
+        if (!playerEnteredSpawner)
+            return;
 
         timer -= Time.deltaTime;
-
+        // Invisible timer to tell when a zombie can come out of a portal
         if (timer <= 0f)
         {
             SpawnZombie();
+            // Helps reset timer
             timer = spawnTime;
         }
-    }
+        if (!giantZombieSpawned)
+        {
+            GiantZombieSpawned();
+            giantZombieSpawned = true;
 
+        }
+    }
+    void GiantZombieSpawned()
+    {
+        Debug.Log("Spawning Giant ZOmbie");
+    }
     void SpawnZombie()
     {
+        // Cannot spawn if player is not in game or in radius
         if (player == null)
             return;
-
-        Zombie[] zombies =
-            FindObjectsByType<Zombie>(FindObjectsSortMode.None);
-
+        //Finds zombies in level/scene
+        Zombie[] zombies = FindObjectsByType<Zombie>(FindObjectsSortMode.None);
+        
+        // If maximum point is reached the portal fades away
         if (zombies.Length >= maxZombies)
             return;
 
         Transform selectedSpawnPoint = null;
         int portalIndex = -1;
-
+        // Searches through all portals even boss portal
         for (int i = 0; i < spawnPoints.Length; i++)
         {
+            // Skip closed portals
             if (portalClosed[i])
                 continue;
-
+            // Demonstrate distance between player and portal
             float distance = Vector2.Distance(
                 player.position,
                 spawnPoints[i].position);
@@ -95,58 +104,55 @@ public class ZombieSpawner : MonoBehaviour
 
         Vector3 spawnPos = selectedSpawnPoint.position;
         spawnPos.z = 0f;
-
-        // Last portal = Giant Zombie only once
-        if (portalIndex == spawnPoints.Length - 1)
+        //Boss portal code
+        if (selectedSpawnPoint.CompareTag("Boss Portal"))
         {
-            if (!giantZombieSpawned)
-            {
-                Instantiate(
-                    GiantZombiePrefab,
-                    spawnPos,
-                    Quaternion.identity);
+            //Spawns boss zombie
+            Instantiate(
+                GiantZombiePrefab,
+                spawnPos,
+                Quaternion.identity);
 
-                giantZombieSpawned = true;
-
-                Debug.Log(
-                    "Giant Zombie spawned at " +
-                    selectedSpawnPoint.name);
-
-                ClosePortal(portalIndex);
-            }
+            Debug.Log("Boss Zombie Spawned");
 
             return;
         }
+        // Normal portal code
+        if (selectedSpawnPoint.CompareTag("Zombie Portal"))
+        {
+            //Spawns normal zombie
+            Instantiate(
+                zombiePrefab,
+                spawnPos,
+                Quaternion.identity);
+            // spawns zombie out of portal
+            portalZombieSpawnCount[portalIndex]++;
 
-        // Normal zombie spawn
-        Instantiate(
-            zombiePrefab,
-            spawnPos,
-            Quaternion.identity);
+            Debug.Log("Normal Zombie Spawned");
+            // Checks to see if the portal can be closed
+            if (portalZombieSpawnCount[portalIndex] >= zombiesPerPortal)
+            {
+                ClosePortal(portalIndex);
+            }
+        }
 
-        portalSpawnCount[portalIndex]++;
-
-        Debug.Log(
-            selectedSpawnPoint.name +
-            " Spawn Count: " +
-            portalSpawnCount[portalIndex]);
 
         // Fade portal after enough zombies spawned
-        if (portalSpawnCount[portalIndex] >= zombiesPerPortal)
+        if (portalZombieSpawnCount[portalIndex] >= zombiesPerPortal)
         {
             ClosePortal(portalIndex);
         }
     }
 
-    void ClosePortal(int portalIndex)
+    void ClosePortal(int portal_Index)
     {
-        if (portalClosed[portalIndex])
+        if (portalClosed[portal_Index])
             return;
 
-        portalClosed[portalIndex] = true;
+        portalClosed[portal_Index] = true;
 
         SpriteRenderer sprite =
-            spawnPoints[portalIndex]
+            spawnPoints[portal_Index]
             .GetComponent<SpriteRenderer>();
 
         if (sprite != null)
@@ -155,7 +161,7 @@ public class ZombieSpawner : MonoBehaviour
         }
 
         Debug.Log(
-            spawnPoints[portalIndex].name +
+            spawnPoints[portal_Index].name +
             " closed.");
     }
 
@@ -200,5 +206,24 @@ public class ZombieSpawner : MonoBehaviour
                     activationDistance);
             }
         }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerEnteredSpawner = true;
+
+            Debug.Log("Entered spawn radius");
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerEnteredSpawner = false;
+
+            Debug.Log("Left spawn radius");
+        }
+
     }
 }

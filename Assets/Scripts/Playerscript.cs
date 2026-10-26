@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -13,10 +14,10 @@ public class Playerscript : MonoBehaviour
 
     // Displays the player's health on screen
     public TextMeshPro Healthtext;
+    public ParticleSystem jumpDust;
 
 
     // Health
-
     [Header("Health")]
     public int Maximum_health = 100;
     public int health;
@@ -25,15 +26,11 @@ public class Playerscript : MonoBehaviour
     public bool IsDead { get; private set; }
 
     // Sprites
-
     [Header("Components")]
     public SpriteRenderer SR;
     public SpriteRenderer GunSR;
 
-
-
     // Movement Section
-
     [Header("Movement")]
     public float maxSpeed = 15f;
     public float speed;
@@ -47,16 +44,15 @@ public class Playerscript : MonoBehaviour
     [Header("Jumping")]
     public float maxJumpingForce = 17.5f;
     public float jumpingForce;
-
-
+    private Vector3 normalScale;
+    private bool IsGrounded;
     // Cloud Bounce Section
 
     [Header("Cloud Bounce")]
-    public float CloudFloatingForce;
-    public float cloudFloatingDuation;
-    private bool isFloating;
-    private float floatTimer;
-    private Vector2 targetPosition;
+    public float CloudFloatingForce; // Vertical velocity while floating midair
+    public float cloudFloatingDuation; // How long the player floats for
+    private bool isFloating; // Sees if the player is floating
+    private float floatTimer;// Timer for floating
 
 
     // Gun
@@ -64,6 +60,11 @@ public class Playerscript : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform gun;
     public float bulletSpeed = 40f;
+    public float damage = 5f;
+    private float gunVisibilityTime = 2f;
+    private float gunFadingSpeed = 3f;
+    private float guntimer;
+    private Color gunColor;
 
     // Physics private components
     private Rigidbody2D rig;
@@ -80,6 +81,7 @@ public class Playerscript : MonoBehaviour
         health = Maximum_health;
         speed = maxSpeed;
         jumpingForce = maxJumpingForce;
+        normalScale = SR.transform.localScale;
 
         // Allow double jumps
         remainingJumps = maxJumps;
@@ -91,6 +93,13 @@ public class Playerscript : MonoBehaviour
         if (SR == null)
         {
             SR = GetComponent<SpriteRenderer>();
+        }
+        if (GunSR != null)
+        {
+            gunColor = GunSR.color;
+            //Starts off hidden until clicking the f key
+            gunColor.a = 0f;
+            GunSR.color = gunColor;
         }
 
         UpdateHealth();
@@ -164,7 +173,7 @@ public class Playerscript : MonoBehaviour
                 isFloating = false;
             }
         }
-        
+        GunVisibility();
         
         if (IsDead)
             return;
@@ -214,14 +223,37 @@ public class Playerscript : MonoBehaviour
                 rig.linearVelocity.x,
                 jumpingForce
             );
-
+            SR.transform.localScale = new Vector3(normalScale.x * 0.95f, normalScale.y * 1.05f, normalScale.z);
             remainingJumps--;
+
+            if (jumpDust != null)
+            {
+                Debug.Log("Playing Jump Dust!");
+                jumpDust.Play();
+            }
         }
 
-        // Shoot when S is pressed
+        // Shoot when F is pressed
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             Shoot();
+        };
+        SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale,10f * Time.deltaTime);
+    }
+    private void GunVisibility()
+    {
+        if (GunSR == null)
+            return;
+        if (guntimer > 0f)
+        {
+            guntimer -= Time.deltaTime;
+            //Fades in
+            gunColor.a = Mathf.Lerp(gunColor.a, 1f, gunFadingSpeed * Time.deltaTime);
+        }
+        else
+        {
+            gunColor.a = Mathf.Lerp(gunColor.a, 0f, gunFadingSpeed * Time.deltaTime);
+            GunSR.color = gunColor;
         }
     }
 
@@ -234,10 +266,13 @@ public class Playerscript : MonoBehaviour
         }
     }
 
-    // Creates a bullet and fires it to it's target
-    //Fine Damage limit for zombies
+    // Creates a bullet and fires to it's target
+    //Find Damage limit for zombies
     private void Shoot()
     {
+        guntimer = gunVisibilityTime;
+        gunColor.a = 1f;
+        GunSR.color = gunColor;
         if (bulletPrefab == null || gun == null)
             return;
         //Shows which way to help shoot the bullets depending on the way the characher is facing//
@@ -245,32 +280,29 @@ public class Playerscript : MonoBehaviour
         float direction = SR.flipX ? -1f : 1f;
 
         // Spawns in front of the gun//
-        Vector3 spawnPosition = gun.position + new Vector3(direction * 0.5f, 0f, 0f);
+        Vector3 spawnPosition = gun.position + new Vector3(direction * 0.5f, 0f,0f);
         //Creates a new bullet after the first one//
-        GameObject bullet = Instantiate(
-            bulletPrefab,
-            spawnPosition,
-            Quaternion.identity
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity
         );
 
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-
-        if (bulletRb != null)
+        
+        if (bullet.TryGetComponent<Rigidbody2D>(out var bulletRb))
         {
             //Horizontal Velocity/speed //
-            bulletRb.linearVelocity = new Vector2(
-                direction * bulletSpeed,
-                0f);// Means no vertical movement//
+            bulletRb.linearVelocity = new Vector2(direction * bulletSpeed, 0f);// 0f Means no vertical movement//
             //Add vertical movement later//
         }
 
         // flips the bullet sprite dependeing on player x axis
-        SpriteRenderer bulletSprite = bullet.GetComponent<SpriteRenderer>();
-
-        if (bulletSprite != null)
+        
+        if (bullet.TryGetComponent<SpriteRenderer>(out var bulletSprite))
         {
-            //Helps the bullet flip visually//
+            //Helps the bullet flip vertically visually//
             bulletSprite.flipX = SR.flipX;
+        }
+        if (bullet.TryGetComponent<Bullet>(out var bulletScript))
+        {
+            bulletScript.damage = damage;
         }
     }
 }

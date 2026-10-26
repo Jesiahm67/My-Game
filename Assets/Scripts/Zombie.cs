@@ -57,7 +57,7 @@ public class Zombie : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void Damage(int amount)
     {
         health -= amount;
 

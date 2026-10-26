@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6297181194688750132}
   - component: {fileID: 1809115377296310193}
-  - component: {fileID: 982679866011466088}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SpawnPoint
-  m_TagString: Untagged
+  m_TagString: Zombie Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,31 +92,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &982679866011466088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7874234803090562749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fc40c289e5ac7d4a963ec0668b92331, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
-  zombiePrefab: {fileID: 4753505186210618731, guid: 5af03a05ab09a4e4f97ace04b4c8ba7b, type: 3}
-  GiantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
-  spawnPoints:
-  - {fileID: 6297181194688750132}
-  - {fileID: 6297181194688750132}
-  - {fileID: 6297181194688750132}
-  - {fileID: 6297181194688750132}
-  - {fileID: 6297181194688750132}
-  spawnTime: 1
-  maxZombies: 5
-  zombiesPerPortal: 10
-  barrier: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
-  activationDistance: 60
 --- !u!1001 &3396714873958261567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,6 +100,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6297181194688750132}
     m_Modifications:
+    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      propertyPath: 'spawnPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6297181194688750132}
+    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      propertyPath: 'spawnPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6297181194688750132}
+    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      propertyPath: 'spawnPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6297181194688750132}
+    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      propertyPath: 'spawnPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 6297181194688750132}
+    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      propertyPath: 'spawnPoints.Array.data[4]'
+      value: 
+      objectReference: {fileID: 6297181194688750132}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -172,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

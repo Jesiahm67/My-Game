@@ -11,6 +11,10 @@ TagManager:
   - Hazard
   - Cloud
   - Zombie
+  - 'Radius '
+  - Secret Exit
+  - Zombie Portal
+  - Boss Portal
   layers:
   - Default
   - TransparentFX

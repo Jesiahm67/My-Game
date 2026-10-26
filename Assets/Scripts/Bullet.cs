@@ -1,8 +1,10 @@
+using System.IO.Compression;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float lifetime = 3f;
+    public float damage;
 
     private void Start()
     {
@@ -16,12 +18,9 @@ public class Bullet : MonoBehaviour
         {
             return;
         }
-
-        if (other.CompareTag("Zombie"))
+        if(other.TryGetComponent<Zombie>(out var zombie))
         {
-            Debug.Log("Zombie Killed");
-
-            Destroy(other.gameObject);
+            zombie.Damage((int)damage);
             Destroy(gameObject);
         }
     }
