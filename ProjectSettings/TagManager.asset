@@ -22,11 +22,11 @@ TagManager:
   - Player
   - Water
   - UI
-  - Player
   - Platform
   - Cloud
   - Bullet
   - Enemy
+  - Background
   - 
   - 
   - 
@@ -55,14 +55,15 @@ TagManager:
   - name: Square
     uniqueID: 1656695871
     locked: 0
-  - name: Player
-    uniqueID: 750304819
-    locked: 0
   - name: Cloud
     uniqueID: 780883987
     locked: 0
-  - name: New Layer 4
+  - name: Objects
     uniqueID: 875391611
+    locked: 0
+  - name: Player
+    uniqueID: 750304819
     locked: 0
   m_RenderingLayers:
   - Default
+  - Background

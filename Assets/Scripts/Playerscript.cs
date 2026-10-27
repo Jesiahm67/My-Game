@@ -15,6 +15,7 @@ public class Playerscript : MonoBehaviour
     // Displays the player's health on screen
     public TextMeshPro Healthtext;
     public ParticleSystem jumpDust;
+    public ParticleSystem bulletDust;
 
 
     // Health
@@ -42,10 +43,9 @@ public class Playerscript : MonoBehaviour
     // Jumping Section
 
     [Header("Jumping")]
-    public float maxJumpingForce = 17.5f;
+    public float maxJumpingForce = 50f;
     public float jumpingForce;
     private Vector3 normalScale;
-    private bool IsGrounded;
     // Cloud Bounce Section
 
     [Header("Cloud Bounce")]
@@ -73,7 +73,7 @@ public class Playerscript : MonoBehaviour
     private int remainingJumps;
     private const int maxJumps = 2;
 
-    private void Start()
+    public void Start()
     {
         rig = GetComponent<Rigidbody2D>();
 
@@ -159,7 +159,7 @@ public class Playerscript : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Update()
     {
         if (isFloating)
         {
@@ -228,7 +228,6 @@ public class Playerscript : MonoBehaviour
 
             if (jumpDust != null)
             {
-                Debug.Log("Playing Jump Dust!");
                 jumpDust.Play();
             }
         }
@@ -237,7 +236,9 @@ public class Playerscript : MonoBehaviour
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             Shoot();
-        };
+            bulletDust.Play();
+        }
+        ;
         SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale,10f * Time.deltaTime);
     }
     private void GunVisibility()

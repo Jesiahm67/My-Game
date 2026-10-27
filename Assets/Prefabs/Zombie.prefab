@@ -155,7 +155,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.19810033, y: -0.42921534}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -165,7 +165,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.57, y: 2.86}
+  m_Size: {x: 2.1737995, y: 2.0015695}
   m_EdgeRadius: 0
 --- !u!114 &8200323442676067990
 MonoBehaviour:
@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Follow
   damage: 5
-  health: 10
+  attackCooldown: 1
+  health: 15
   moveSpeed: 15
   stopDistance: 1

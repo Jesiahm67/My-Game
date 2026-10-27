@@ -5,6 +5,11 @@ public class Zombie : MonoBehaviour
 {
     [Header("Stats")]
     public int damage = 5;
+
+    public float attackCooldown = 1f;
+
+    private float nextAttackTime;
+
     public int health = 10;
     public float moveSpeed = 3f;
     public float stopDistance = 1f;
@@ -74,7 +79,12 @@ public class Zombie : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            return;
+        }
+        if (Time.time >= nextAttackTime)
+        {
             player.Damage(damage);
+            nextAttackTime = Time.time + attackCooldown;
         }
     }
 }

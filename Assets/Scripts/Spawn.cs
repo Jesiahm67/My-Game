@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
@@ -16,8 +17,10 @@ public class ZombieSpawner : MonoBehaviour
     // Number of zombies a portal can spawn before disappearing
     public int zombiesPerPortal = 10;
 
-    // Distance when the portals chooses to spawn zombies
-    public float activationDistance = 35f;
+    // Distance when the portals chooses to spawn normal zombies
+    public float zombiePortalactivationDistance = 35f;
+
+    public float bossPortalActivationDistance = 60f;
 
     private float timer;
     private Transform player;
@@ -55,18 +58,10 @@ public class ZombieSpawner : MonoBehaviour
             // Helps reset timer
             timer = spawnTime;
         }
-        if (!giantZombieSpawned)
-        {
-            GiantZombieSpawned();
-            giantZombieSpawned = true;
+    }
 
-        }
-    }
-    void GiantZombieSpawned()
-    {
-        Debug.Log("Spawning Giant ZOmbie");
-    }
     void SpawnZombie()
+
     {
         // Cannot spawn if player is not in game or in radius
         if (player == null)
@@ -91,7 +86,16 @@ public class ZombieSpawner : MonoBehaviour
                 player.position,
                 spawnPoints[i].position);
 
-            if (distance <= activationDistance)
+            float currentActivationDistance = 0f;
+            if (spawnPoints[i].CompareTag("Boss Portal"))
+            {
+                currentActivationDistance = bossPortalActivationDistance;
+            }
+            else if (spawnPoints[i].CompareTag("Zombie Portal"))
+            {
+                currentActivationDistance = zombiePortalactivationDistance;
+            }
+            if (distance <= currentActivationDistance)
             {
                 selectedSpawnPoint = spawnPoints[i];
                 portalIndex = i;
@@ -107,13 +111,19 @@ public class ZombieSpawner : MonoBehaviour
         //Boss portal code
         if (selectedSpawnPoint.CompareTag("Boss Portal"))
         {
+            if (giantZombieSpawned)
+                return;
             //Spawns boss zombie
             Instantiate(
                 GiantZombiePrefab,
                 spawnPos,
                 Quaternion.identity);
 
+            giantZombieSpawned = true;
+
             Debug.Log("Boss Zombie Spawned");
+
+            ClosePortal(portalIndex);
 
             return;
         }
@@ -199,12 +209,15 @@ public class ZombieSpawner : MonoBehaviour
 
         foreach (Transform point in spawnPoints)
         {
-            if (point != null)
+            float radius = zombiePortalactivationDistance;
+
+            if (point.CompareTag("Boss Portal"))
             {
-                Gizmos.DrawWireSphere(
-                    point.position,
-                    activationDistance);
+                radius = bossPortalActivationDistance;
             }
+    Gizmos.DrawWireSphere(
+    point.position,
+    radius);
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
