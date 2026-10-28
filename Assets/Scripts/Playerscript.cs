@@ -17,6 +17,9 @@ public class Playerscript : MonoBehaviour
     public ParticleSystem jumpDust;
     public ParticleSystem bulletDust;
 
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+
 
     // Health
     [Header("Health")]
@@ -154,8 +157,8 @@ public class Playerscript : MonoBehaviour
             Death?.Invoke();
 
             Debug.Log("Player Died");
-
             SceneManager.LoadScene("Game Over");
+
         }
     }
 
@@ -229,6 +232,10 @@ public class Playerscript : MonoBehaviour
             if (jumpDust != null)
             {
                 jumpDust.Play();
+            }
+            if (audioSource != null && jumpSound != null)
+            {
+                audioSource.PlayOneShot(jumpSound);
             }
         }
 

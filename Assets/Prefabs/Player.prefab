@@ -294,6 +294,8 @@ MonoBehaviour:
   Healthtext: {fileID: 2818139025288725209}
   jumpDust: {fileID: 30090165458325720}
   bulletDust: {fileID: 6762404679520235226, guid: 0f67926c3b2b8214bb21403818709a71, type: 3}
+  audioSource: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: b4490c0aca7b19641aba50938c9d9961, type: 3}
   Maximum_health: 100
   health: 20
   SR: {fileID: 2758407236198761000}
