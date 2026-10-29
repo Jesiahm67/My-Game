@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1383931407949579385}
   - component: {fileID: 2734947855689313698}
   - component: {fileID: 936419018874264475}
-  - component: {fileID: -322505275324318275}
   m_Layer: 0
   m_Name: SpawnerRadius
   m_TagString: Untagged
@@ -129,27 +128,3 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &-322505275324318275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4743158108982437463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fc40c289e5ac7d4a963ec0668b92331, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
-  zombiePrefab: {fileID: 4753505186210618731, guid: 5af03a05ab09a4e4f97ace04b4c8ba7b, type: 3}
-  GiantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
-  spawnPoints:
-  - {fileID: 6297181194688750132, guid: 95231bcfeb7388a499a1adb1864834c0, type: 3}
-  - {fileID: 6297181194688750132, guid: 95231bcfeb7388a499a1adb1864834c0, type: 3}
-  - {fileID: 6297181194688750132, guid: 95231bcfeb7388a499a1adb1864834c0, type: 3}
-  - {fileID: 6297181194688750132, guid: 95231bcfeb7388a499a1adb1864834c0, type: 3}
-  - {fileID: 6277241854685761805, guid: 4105a32b6d78d0e44aeac7d977d86a7f, type: 3}
-  spawnTime: 0.5
-  maxZombies: 10
-  zombiesPerPortal: 10
-  activationDistance: 35

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6297181194688750132}
   - component: {fileID: 1809115377296310193}
+  - component: {fileID: 2227991867982048544}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Zombie Portal
@@ -92,6 +93,24 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2227991867982048544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874234803090562749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca851bfff356d542b2fe568bd7ff57f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  zombiePrefab: {fileID: 4753505186210618731, guid: 5af03a05ab09a4e4f97ace04b4c8ba7b, type: 3}
+  ZombieSpawnPoint: {fileID: 1809115377296310193}
+  spawnTime: 0.9
+  maxZombies: 10
+  zombiesPerPortal: 10
+  activationDistance: 60
 --- !u!1001 &3396714873958261567
 PrefabInstance:
   m_ObjectHideFlags: 0

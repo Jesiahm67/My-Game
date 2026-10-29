@@ -79,12 +79,11 @@ public class Zombie : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            return;
-        }
-        if (Time.time >= nextAttackTime)
-        {
-            player.Damage(damage);
-            nextAttackTime = Time.time + attackCooldown;
+            if (Time.time >= nextAttackTime)
+            {
+                player.Damage(damage);
+                nextAttackTime = Time.time + attackCooldown;
+            }
         }
     }
 }

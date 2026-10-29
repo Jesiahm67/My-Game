@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -19,6 +18,7 @@ public class Playerscript : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip jumpSound;
+    public AudioClip gunshot; 
 
 
     // Health
@@ -68,6 +68,7 @@ public class Playerscript : MonoBehaviour
     private float gunFadingSpeed = 3f;
     private float guntimer;
     private Color gunColor;
+    public float timer = 3;
 
     // Physics private components
     private Rigidbody2D rig;
@@ -242,8 +243,14 @@ public class Playerscript : MonoBehaviour
         // Shoot when F is pressed
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
+            timer -= Time.deltaTime;
             Shoot();
             bulletDust.Play();
+            timer = 3;
+            if (audioSource != null && gunshot != null)
+            {
+                audioSource.PlayOneShot(gunshot);
+            }
         }
         ;
         SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale,10f * Time.deltaTime);

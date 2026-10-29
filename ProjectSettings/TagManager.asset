@@ -15,6 +15,7 @@ TagManager:
   - Secret Exit
   - Zombie Portal
   - Boss Portal
+  - SmokeFire
   layers:
   - Default
   - TransparentFX

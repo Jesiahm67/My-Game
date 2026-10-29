@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6277241854685761805}
   - component: {fileID: 1754458762447852784}
+  - component: {fileID: -9089628694087006753}
   m_Layer: 0
   m_Name: BossSpawnPoint
   m_TagString: Boss Portal
@@ -83,7 +84,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.9960785, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.9960785, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92,6 +93,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-9089628694087006753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625092937790055027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b3cfb80c7290e44af5deefbd12d702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bossportal
+  giantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
+  BossSpawnPoint: {fileID: 1754458762447852784}
+  activationDistance: 60
 --- !u!1001 &5479816841483593684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176,11 +192,35 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4850777934774338745}
   m_SourcePrefab: {fileID: 100100000, guid: 755913de097b62048860fdfff2c96811, type: 3}
+--- !u!1 &999567434824040835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
+  m_PrefabInstance: {fileID: 5479816841483593684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4850777934774338745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999567434824040835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b3cfb80c7290e44af5deefbd12d702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossPortalSpawner
+  giantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
+  BossSpawnPoint: {fileID: 0}
+  activationDistance: 60
 --- !u!4 &6861390344186127277 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}

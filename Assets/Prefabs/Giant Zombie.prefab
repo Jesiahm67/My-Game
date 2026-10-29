@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6907108614297191693}
   - component: {fileID: 9034553724737196348}
   - component: {fileID: 5990912933667412246}
-  - component: {fileID: 2299894685142352311}
   - component: {fileID: 3218856974029570935}
+  - component: {fileID: 5013636805593240817}
   m_Layer: 10
   m_Name: Giant Zombie
   m_TagString: Zombie
@@ -121,8 +121,25 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &2299894685142352311
-BoxCollider2D:
+--- !u!114 &3218856974029570935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960903504431201149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af2099b617fe2d44cb287507a590191c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Follow
+  damage: 15
+  attackCooldown: 3
+  health: 100
+  moveSpeed: 3
+  stopDistance: 1
+--- !u!58 &5013636805593240817
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -155,32 +172,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.21229684, y: -0.4338225}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.57, y: 2.86}
-    newSize: {x: 2.57, y: 2.86}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 2.1454065, y: 1.9923546}
-  m_EdgeRadius: 0
---- !u!114 &3218856974029570935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3960903504431201149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af2099b617fe2d44cb287507a590191c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Follow
-  damage: 15
-  attackCooldown: 3
-  health: 100
-  moveSpeed: 3
-  stopDistance: 1
+  m_Offset: {x: -0.20000014, y: -0.35386434}
+  m_Radius: 1.0761355
