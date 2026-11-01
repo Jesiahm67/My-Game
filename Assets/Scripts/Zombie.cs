@@ -5,24 +5,17 @@ public class Zombie : MonoBehaviour
 {
     [Header("Stats")]
     public int damage = 5;
-
     public float attackCooldown = 1f;
-
     private float nextAttackTime;
-
     public int health = 10;
     public float moveSpeed = 3f;
     public float stopDistance = 1f;
-
     private Rigidbody2D rb;
     private Playerscript player;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
         if (playerObject != null)
         {
             player = playerObject.GetComponent<Playerscript>();
@@ -48,7 +41,6 @@ public class Zombie : MonoBehaviour
                 direction * moveSpeed,
                 rb.linearVelocity.y
             );
-
             Vector3 scale = transform.localScale;
             scale.x = Mathf.Abs(scale.x) * direction;
             transform.localScale = scale;
@@ -56,9 +48,11 @@ public class Zombie : MonoBehaviour
         else
         {
             rb.linearVelocity = new Vector2(
+                
                 0,
                 rb.linearVelocity.y
-            );
+            
+                );
         }
     }
 

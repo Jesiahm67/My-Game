@@ -6,25 +6,27 @@ using UnityEngine.SceneManagement;
 
 // Automatically adds a Rigidbody2D if one is missing
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioSource))]
+
 public class Playerscript : MonoBehaviour
 {
     // Event fired when the player dies
     public static event Action Death;
 
-    // Displays the player's health on screen
-    public TextMeshPro Healthtext;
-    public ParticleSystem jumpDust;
-    public ParticleSystem bulletDust;
+    // Displays the player's Health on screen
+    public TextMeshPro HealthText;
+    public ParticleSystem JumpDust;
+    public ParticleSystem BulletDust;
 
-    public AudioSource audioSource;
-    public AudioClip jumpSound;
-    public AudioClip gunshot; 
+    public AudioSource AudioSource;
+    public AudioClip JumpSound;
+    public AudioClip Gunshot; 
 
 
     // Health
     [Header("Health")]
-    public int Maximum_health = 100;
-    public int health;
+    public int Maximum_Health = 100;
+    public int Health;
 
     // Prevents movement and actions after death
     public bool IsDead { get; private set; }
@@ -36,59 +38,64 @@ public class Playerscript : MonoBehaviour
 
     // Movement Section
     [Header("Movement")]
-    public float maxSpeed = 15f;
-    public float speed;
+    public float MaxSpeed = 15f;
+    public float Speed;
 
-    // Sprint speed multiplier
-    public float sprintMultiplier = 2f;
+    // Sprint Speed multiplier
+    public float SprintMultiplier = 2f;
 
 
     // Jumping Section
 
     [Header("Jumping")]
-    public float maxJumpingForce = 50f;
-    public float jumpingForce;
+    public float MaxJumpingForce = 50f;
+    public float JumpingForce;
     private Vector3 normalScale;
     // Cloud Bounce Section
 
     [Header("Cloud Bounce")]
     public float CloudFloatingForce; // Vertical velocity while floating midair
-    public float cloudFloatingDuation; // How long the player floats for
-    private bool isFloating; // Sees if the player is floating
-    private float floatTimer;// Timer for floating
+    public float CloudFloatingDuation; // How long the player floats for
+    private bool IsFloating; // Sees if the player is floating
+    private float FloatTimer;// Timer for floating
 
 
     // Gun
     [Header("Pistol")]
     public GameObject bulletPrefab;
     public Transform gun;
+    public Transform MuzzleRight;
+    public Transform MuzzleLeft;
     public float bulletSpeed = 40f;
     public float damage = 5f;
-    private float gunVisibilityTime = 2f;
-    private float gunFadingSpeed = 3f;
-    private float guntimer;
-    private Color gunColor;
-    public float timer = 3;
+    private float GunVisibilityTime = 2f;
+    private float GunFadingSpeed = 3f;
+    private float GunTimer;
+    private Color GunColor;
+    private Vector3 gunStartposition;
+    public float Timer = 3;
+
+
 
     // Physics private components
-    private Rigidbody2D rig;
+    private Rigidbody2D Rigidbody;
 
     // Double jump system
-    private int remainingJumps;
-    private const int maxJumps = 2;
+    private int RemainingJumps;
+    private const int MaxJumps = 2;
 
     public void Start()
     {
-        rig = GetComponent<Rigidbody2D>();
+        Rigidbody = GetComponent<Rigidbody2D>();
 
         // Shows player stats
-        health = Maximum_health;
-        speed = maxSpeed;
-        jumpingForce = maxJumpingForce;
+        Health = Maximum_Health;
+        Speed = MaxSpeed;
+        JumpingForce = MaxJumpingForce;
         normalScale = SR.transform.localScale;
-
+        gunStartposition = gun.localPosition;
         // Allow double jumps
-        remainingJumps = maxJumps;
+        RemainingJumps = MaxJumps;
 
         // Player starts off alive
         IsDead = false;
@@ -96,14 +103,18 @@ public class Playerscript : MonoBehaviour
         // Automatically find SpriteRenderer if it is not assigned
         if (SR == null)
         {
-            SR = GetComponent<SpriteRenderer>();
+            SR = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
         }
         if (GunSR != null)
         {
-            gunColor = GunSR.color;
+            GunColor = GunSR.color;
             //Starts off hidden until clicking the f key
-            gunColor.a = 0f;
-            GunSR.color = gunColor;
+            GunColor.a = 0f;
+            GunSR.color = GunColor;
+        }
+        if (AudioSource == null)
+        {
+            AudioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
         }
 
         UpdateHealth();
@@ -115,10 +126,10 @@ public class Playerscript : MonoBehaviour
         if (collision.gameObject.CompareTag("Cloud"))
         {
             Debug.Log("Touched Cloud!");
-            isFloating = true;
-            floatTimer = cloudFloatingDuation;
+            IsFloating = true;
+            FloatTimer = CloudFloatingDuation;
                 
-            remainingJumps = maxJumps;
+            RemainingJumps = MaxJumps;
             return;
         }
 
@@ -127,7 +138,7 @@ public class Playerscript : MonoBehaviour
         {
             if (contact.normal.y > 0.5f)
             {
-                remainingJumps = maxJumps;
+                RemainingJumps = MaxJumps;
                 break;
             }
         }
@@ -139,14 +150,14 @@ public class Playerscript : MonoBehaviour
         if (IsDead)
             return;
 
-        health = Mathf.Max(0, health - damage);
+        Health = Mathf.Max(0, Health - damage);
 
         UpdateHealth();
 
-        Debug.Log("Health: "+ health);
+        Debug.Log("Health: "+ Health);
 
         // Handles how the player dies 
-        if (health == 0)
+        if (Health == 0)
         {
             IsDead = true;
 
@@ -165,16 +176,16 @@ public class Playerscript : MonoBehaviour
 
     public void Update()
     {
-        if (isFloating)
+        if (IsFloating)
         {
-            floatTimer -= Time.deltaTime;
+            FloatTimer -= Time.deltaTime;
 
-            rig.linearVelocity = new Vector2(
-                rig.linearVelocity.x,
+            Rigidbody.linearVelocity = new Vector2(
+                Rigidbody.linearVelocity.x,
                 CloudFloatingForce);
-            if (floatTimer <= 0f)
+            if (FloatTimer <= 0f)
             {
-                isFloating = false;
+                IsFloating = false;
             }
         }
         GunVisibility();
@@ -194,6 +205,8 @@ public class Playerscript : MonoBehaviour
 
             SR.flipX = true;
             GunSR.flipX = true;
+
+            gun.localPosition = new Vector3(-Mathf.Abs(gunStartposition.x),gunStartposition.y, gunStartposition.z);
         }
 
         // Move right and flip sprites connected to the player
@@ -203,81 +216,82 @@ public class Playerscript : MonoBehaviour
 
             SR.flipX = false;
             GunSR.flipX = false;
+
+            gun.localPosition = new Vector3(Mathf.Abs(gunStartposition.x), gunStartposition.y, gunStartposition.z);
         }
 
         // Apply sprint multiplier when sprinting
-        float currentSpeed = speed;
+        float currentSpeed = Speed;
 
         if (Keyboard.current.shiftKey.isPressed)
         {
-            currentSpeed *= sprintMultiplier;
+            currentSpeed *= SprintMultiplier;
         }
 
-        // Controls the movement speed
-        rig.linearVelocity = new Vector2(
+        // Controls the movement Speed
+        Rigidbody.linearVelocity = new Vector2(
             moveX * currentSpeed,
-            rig.linearVelocity.y
+            Rigidbody.linearVelocity.y
         );
 
         // Jump / double jump
         if (Keyboard.current.spaceKey.wasPressedThisFrame &&
-            remainingJumps > 0)
+            RemainingJumps > 0)
         {
-            rig.linearVelocity = new Vector2(
-                rig.linearVelocity.x,
-                jumpingForce
+            Rigidbody.linearVelocity = new Vector2(
+                Rigidbody.linearVelocity.x,
+                JumpingForce
             );
             SR.transform.localScale = new Vector3(normalScale.x * 0.95f, normalScale.y * 1.05f, normalScale.z);
-            remainingJumps--;
+            RemainingJumps--;
 
-            if (jumpDust != null)
+            if (JumpDust != null)
             {
-                jumpDust.Play();
+                JumpDust.Play();
             }
-            if (audioSource != null && jumpSound != null)
+            if (AudioSource != null && JumpSound != null)
             {
-                audioSource.PlayOneShot(jumpSound);
+                AudioSource.PlayOneShot(JumpSound);
             }
         }
 
         // Shoot when F is pressed
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
-            timer -= Time.deltaTime;
+            Timer -= Time.deltaTime;
             Shoot();
-            bulletDust.Play();
-            timer = 3;
-            if (audioSource != null && gunshot != null)
+            BulletDust.Play();
+            Timer = 3;
+            if (AudioSource != null && Gunshot != null)
             {
-                audioSource.PlayOneShot(gunshot);
+                AudioSource.PlayOneShot(Gunshot);
             }
         }
-        ;
         SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale,10f * Time.deltaTime);
     }
     private void GunVisibility()
     {
         if (GunSR == null)
             return;
-        if (guntimer > 0f)
+        if (GunTimer > 0f)
         {
-            guntimer -= Time.deltaTime;
+            GunTimer -= Time.deltaTime;
             //Fades in
-            gunColor.a = Mathf.Lerp(gunColor.a, 1f, gunFadingSpeed * Time.deltaTime);
+            GunColor.a = Mathf.Lerp(GunColor.a, 1f, GunFadingSpeed * Time.deltaTime);
         }
         else
         {
-            gunColor.a = Mathf.Lerp(gunColor.a, 0f, gunFadingSpeed * Time.deltaTime);
-            GunSR.color = gunColor;
+            GunColor.a = Mathf.Lerp(GunColor.a, 0f, GunFadingSpeed * Time.deltaTime);
+            GunSR.color = GunColor;
         }
     }
 
-    // Updates the health text UI
+    // Updates the Health text UI
     public void UpdateHealth()
     {
-        if (Healthtext != null)
+        if (HealthText != null)
         {
-            Healthtext.text = "Health: " + health;
+            HealthText.text = "Health: " + Health;
         }
     }
 
@@ -285,25 +299,27 @@ public class Playerscript : MonoBehaviour
     //Find Damage limit for zombies
     private void Shoot()
     {
-        guntimer = gunVisibilityTime;
-        gunColor.a = 1f;
-        GunSR.color = gunColor;
+        GunTimer = GunVisibilityTime;
+        GunColor.a = 1f;
+        GunSR.color = GunColor;
         if (bulletPrefab == null || gun == null)
             return;
         //Shows which way to help shoot the bullets depending on the way the characher is facing//
-
         float direction = SR.flipX ? -1f : 1f;
 
-        // Spawns in front of the gun//
-        Vector3 spawnPosition = gun.position + new Vector3(direction * 0.5f, 0f,0f);
-        //Creates a new bullet after the first one//
-        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity
-        );
+        BulletDust.transform.position = SR.flipX? MuzzleLeft.position : MuzzleRight.position;
+        BulletDust.Play();
 
-        
+
+        // Spawns in front of the gun//
+        Vector3 spawnPosition = SR.flipX ? MuzzleLeft.position : MuzzleRight.position;
+        //Creates a new bullet after the first one//
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+
+        // Velocity Section
         if (bullet.TryGetComponent<Rigidbody2D>(out var bulletRb))
         {
-            //Horizontal Velocity/speed //
+            //Horizontal Velocity/Speed //
             bulletRb.linearVelocity = new Vector2(direction * bulletSpeed, 0f);// 0f Means no vertical movement//
             //Add vertical movement later//
         }
@@ -320,4 +336,5 @@ public class Playerscript : MonoBehaviour
             bulletScript.damage = damage;
         }
     }
+
 }

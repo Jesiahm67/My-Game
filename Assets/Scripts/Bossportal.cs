@@ -3,36 +3,35 @@ using UnityEngine;
 
 public class BossPortalSpawner : MonoBehaviour
 {
-    public GameObject giantZombiePrefab;
+    public GameObject GiantZombiePrefab;
 
     public SpriteRenderer BossSpawnPoint;
 
-    public float activationDistance = 60f;
+    public float ActivationDistance = 60f;
 
-    private Transform player;
+    private Transform Player;
 
-    private bool giantZombieSpawned;
-    private bool portalClosed;
+    private bool GiantZombieSpawned;
+    private bool PortalClosed;
 
     private void Start()
     {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        if (playerObject != null)
+        GameObject PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        if (PlayerObject != null)
         {
-            player = playerObject.transform;
+            Player = PlayerObject.transform;
         }
     }
     private void Update()
     {
-        if (portalClosed)
+        if (PortalClosed)
             return;
-        if (giantZombieSpawned)
+        if (GiantZombieSpawned)
             return;
-        if (player == null)
+        if (Player == null)
             return;
-        float distance = Vector2.Distance(player.position,transform.position);
-        if (distance <= activationDistance)
+        float distance = Vector2.Distance(Player.position,transform.position);
+        if (distance <= ActivationDistance)
         {
             SpawnBoss();
         }
@@ -40,25 +39,21 @@ public class BossPortalSpawner : MonoBehaviour
     private void SpawnBoss()
     {
         Instantiate(
-            giantZombiePrefab,
+            GiantZombiePrefab,
             transform.position,
             Quaternion.identity);
-        giantZombieSpawned = true;
+        GiantZombieSpawned = true;
         Debug.Log("Boss Zombie Spawned");
         ClosePortal();
     }
-
     private void ClosePortal()
     {
-        portalClosed = true;
-
+        PortalClosed = true;
         if (BossSpawnPoint != null)
         {
-            StartCoroutine(
-                FadePortal(BossSpawnPoint));
+            StartCoroutine(FadePortal(BossSpawnPoint));
         }
     }
-
     private IEnumerator FadePortal(
         SpriteRenderer sprite)
     {
@@ -66,7 +61,8 @@ public class BossPortalSpawner : MonoBehaviour
         float elapsed = 0f;
         Color startColor = sprite.color;
         while (elapsed < duration)
-        {   elapsed += Time.deltaTime;
+        {   
+            elapsed += Time.deltaTime;
             Color color = startColor;
             color.a = Mathf.Lerp(startColor.a,0f,elapsed / duration);
             sprite.color = color;
@@ -78,6 +74,6 @@ public class BossPortalSpawner : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position,activationDistance);
+        Gizmos.DrawWireSphere(transform.position,ActivationDistance);
     }
 }

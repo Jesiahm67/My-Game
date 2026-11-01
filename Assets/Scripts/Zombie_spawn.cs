@@ -48,7 +48,7 @@ public class ZombiePortalSpawner : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-        SpawnZombie();
+            SpawnZombie();
             timer = spawnTime;
         }
     }
@@ -95,7 +95,7 @@ public class ZombiePortalSpawner : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             Color color = startColor;
-            color.a = Mathf.Lerp(startColor.a,0f,elapsed / duration);
+            color.a = Mathf.Lerp(startColor.a, 0f, elapsed / duration);
             sprite.color = color;
             yield return null;
         }
@@ -105,6 +105,6 @@ public class ZombiePortalSpawner : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position,activationDistance);
+        Gizmos.DrawWireSphere(transform.position, activationDistance);
     }
 }
