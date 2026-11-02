@@ -6,7 +6,7 @@ public class ZombiePortalSpawner : MonoBehaviour
     public GameObject zombiePrefab;
     public SpriteRenderer ZombieSpawnPoint;
 
-    public float spawnTime = .5f;
+    public float spawnTime = 1f;
     public int maxZombies = 10;
     public int zombiesPerPortal = 10;
     public float activationDistance = 35f;

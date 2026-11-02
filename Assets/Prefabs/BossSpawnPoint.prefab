@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -9089628694087006753}
   m_Layer: 0
   m_Name: BossSpawnPoint
-  m_TagString: Boss Portal
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,10 +28,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 304.4124, y: 6.8596, z: 0}
-  m_LocalScale: {x: 30, y: 47.745, z: 1}
+  m_LocalScale: {x: 85.924675, y: 110.51547, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6861390344186127277}
+  - {fileID: 4356886880272721010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1754458762447852784
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.9960785, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -104,11 +104,14 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67b3cfb80c7290e44af5deefbd12d702, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bossportal
-  giantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::BossPortalSpawner
+  GiantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
   BossSpawnPoint: {fileID: 1754458762447852784}
-  activationDistance: 60
---- !u!1001 &5479816841483593684
+  spawnTime: 5
+  maxGiantZombies: 5
+  GiantZombiePerPortal: 5
+  ActivationDistance: 120
+--- !u!1001 &3405411540296294411
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -116,41 +119,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6277241854685761805}
     m_Modifications:
-    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: 'spawnPoints.Array.data[0]'
-      value: 
-      objectReference: {fileID: 6277241854685761805}
-    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: 'spawnPoints.Array.data[1]'
-      value: 
-      objectReference: {fileID: 6277241854685761805}
-    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: 'spawnPoints.Array.data[2]'
-      value: 
-      objectReference: {fileID: 6277241854685761805}
-    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: 'spawnPoints.Array.data[3]'
-      value: 
-      objectReference: {fileID: 6277241854685761805}
-    - target: {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: 'spawnPoints.Array.data[4]'
-      value: 
-      objectReference: {fileID: 6277241854685761805}
-    - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21133338
+      value: 0.04000001
       objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalPosition.z
@@ -162,15 +137,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -188,41 +163,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnerRadius
       objectReference: {fileID: 0}
-    - target: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -322505275324318275, guid: 755913de097b62048860fdfff2c96811, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4850777934774338745}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 755913de097b62048860fdfff2c96811, type: 3}
---- !u!1 &999567434824040835 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4743158108982437463, guid: 755913de097b62048860fdfff2c96811, type: 3}
-  m_PrefabInstance: {fileID: 5479816841483593684}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4850777934774338745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999567434824040835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b3cfb80c7290e44af5deefbd12d702, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossPortalSpawner
-  giantZombiePrefab: {fileID: 3960903504431201149, guid: e0ff36cdd91f4a9469db8406950d32a0, type: 3}
-  BossSpawnPoint: {fileID: 0}
-  activationDistance: 60
---- !u!4 &6861390344186127277 stripped
+--- !u!4 &4356886880272721010 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1383931407949579385, guid: 755913de097b62048860fdfff2c96811, type: 3}
-  m_PrefabInstance: {fileID: 5479816841483593684}
+  m_PrefabInstance: {fileID: 3405411540296294411}
   m_PrefabAsset: {fileID: 0}

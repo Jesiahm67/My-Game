@@ -4,18 +4,24 @@ using UnityEngine;
 public class BossPortalSpawner : MonoBehaviour
 {
     public GameObject GiantZombiePrefab;
-
     public SpriteRenderer BossSpawnPoint;
-
-    public float ActivationDistance = 60f;
-
+    public float spawnTime = 5f;
+    public int maxGiantZombies = 5;
+    public int GiantZombiePerPortal = 5;
+    public float ActivationDistance = 150f;
+    private float timer;
     private Transform Player;
-
-    private bool GiantZombieSpawned;
+    private int GiantZombieSpawned;
     private bool PortalClosed;
-
     private void Start()
     {
+        timer = spawnTime;
+        if (BossSpawnPoint != null)
+        {
+            Color color = BossSpawnPoint.color;
+            color.a = 1f;
+            BossSpawnPoint.color = color;
+        }
         GameObject PlayerObject = GameObject.FindGameObjectWithTag("Player");
         if (PlayerObject != null)
         {
@@ -26,25 +32,38 @@ public class BossPortalSpawner : MonoBehaviour
     {
         if (PortalClosed)
             return;
-        if (GiantZombieSpawned)
-            return;
         if (Player == null)
             return;
         float distance = Vector2.Distance(Player.position,transform.position);
-        if (distance <= ActivationDistance)
+        if (distance > ActivationDistance)
+            return;
+        timer -= Time.deltaTime;
+
+        if (timer <= 0f)
         {
             SpawnBoss();
+            timer = spawnTime;
         }
     }
     private void SpawnBoss()
     {
+
+        BossPortalSpawner[] giantZombies = FindObjectsByType<BossPortalSpawner>(FindObjectsSortMode.None);
+
+        if (giantZombies.Length >= maxGiantZombies)
+            return;
+            
         Instantiate(
             GiantZombiePrefab,
             transform.position,
             Quaternion.identity);
-        GiantZombieSpawned = true;
+        GiantZombieSpawned++;
+
         Debug.Log("Boss Zombie Spawned");
-        ClosePortal();
+        if (GiantZombieSpawned >= GiantZombiePerPortal)
+        {
+            ClosePortal();
+        }
     }
     private void ClosePortal()
     {
@@ -64,7 +83,7 @@ public class BossPortalSpawner : MonoBehaviour
         {   
             elapsed += Time.deltaTime;
             Color color = startColor;
-            color.a = Mathf.Lerp(startColor.a,0f,elapsed / duration);
+            color.a = Mathf.Lerp(startColor.a, 0f, elapsed / duration);
             sprite.color = color;
             yield return null;
         }

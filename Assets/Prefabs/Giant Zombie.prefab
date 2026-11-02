@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5990912933667412246}
   - component: {fileID: 3218856974029570935}
   - component: {fileID: 5013636805593240817}
-  m_Layer: 10
+  - component: {fileID: -7634866500575907481}
+  m_Layer: 9
   m_Name: Giant Zombie
   m_TagString: Zombie
   m_Icon: {fileID: 0}
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 351, y: 42, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,8 +81,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 750304819
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6019453725058403666, guid: 80c8d94a81d7bac46b754a122ffa9e72, type: 3}
@@ -136,7 +137,7 @@ MonoBehaviour:
   damage: 15
   attackCooldown: 3
   health: 100
-  moveSpeed: 3
+  moveSpeed: 10
   stopDistance: 1
 --- !u!58 &5013636805593240817
 CircleCollider2D:
@@ -174,3 +175,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.20000014, y: -0.35386434}
   m_Radius: 1.0761355
+--- !u!114 &-7634866500575907481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960903504431201149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a53d78a9a156e94fb1b7d09defa36e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  damage: 5
+  attackCooldown: 1
+  health: 10
+  moveSpeed: 3
+  stopDistance: 1

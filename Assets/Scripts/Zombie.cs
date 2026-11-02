@@ -7,8 +7,8 @@ public class Zombie : MonoBehaviour
     public int damage = 5;
     public float attackCooldown = 1f;
     private float nextAttackTime;
-    public int health = 10;
-    public float moveSpeed = 3f;
+    public int health = 20;
+    public float moveSpeed = 10f;
     public float stopDistance = 1f;
     private Rigidbody2D rb;
     private Playerscript player;
@@ -48,11 +48,8 @@ public class Zombie : MonoBehaviour
         else
         {
             rb.linearVelocity = new Vector2(
-                
                 0,
-                rb.linearVelocity.y
-            
-                );
+                rb.linearVelocity.y);
         }
     }
 
@@ -62,7 +59,7 @@ public class Zombie : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
@@ -79,5 +76,17 @@ public class Zombie : MonoBehaviour
                 nextAttackTime = Time.time + attackCooldown;
             }
         }
+    }
+    private void Die()
+    {
+        if (player != null)
+        {
+            player.AddKill();
+        }
+        if (Secret_Level.Instance != null)
+        {
+            Secret_Level.Instance.ZombieKilled();
+        }
+        Destroy(gameObject);
     }
 }
