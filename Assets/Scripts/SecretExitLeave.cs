@@ -8,7 +8,7 @@ public class SecretExitReturn : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        Debug.Log("Return to Level 1");
+        GameData.ReturningFromSecretLevel = true;
 
         SceneManager.LoadScene("Level 1");
     }

@@ -774,7 +774,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.49073297, g: 0.059362773, b: 0.5471698, a: 0}
+  m_BackGroundColor: {r: 0.54901963, g: 0.5415462, b: 0.058823537, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -915,7 +915,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -330.1956, y: 0.065193176, z: 0}
-  m_LocalScale: {x: 6.5, y: 7, z: 1}
+  m_LocalScale: {x: 6.499999, y: 7.000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8960982060537494948}
@@ -1002,7 +1002,7 @@ MonoBehaviour:
   Maximum_Health: 100
   Health: 0
   HealthText: {fileID: 2818139025288725209}
-  Gaming_Time: 120
+  Gaming_Time: 180
   Timer: {fileID: 4807619113655376840}
   ZombiesKilled: 0
   SecretExitKills: 25
@@ -1011,15 +1011,15 @@ MonoBehaviour:
   LevelExit: {fileID: 0}
   SR: {fileID: 2758407236198761000}
   GunSR: {fileID: 8445708476354419195}
-  MaxSpeed: 15
+  MaxSpeed: 30
   Speed: 0
   SprintMultiplier: 2
   MaxJumpingForce: 50
   JumpingForce: 0
   JumpDust: {fileID: 9191571888414913133}
   JumpSound: {fileID: 8300000, guid: 52716d0c4655fcd44a5894197a19832f, type: 3}
-  CloudFloatingForce: 20
-  CloudFloatingDuation: 0
+  CloudFloatingForce: 10
+  CloudFloatingDuation: 2
   bulletPrefab: {fileID: 8246016202531862030, guid: f8ea92c4c7b38fb48ba80a1f3f9467ad, type: 3}
   BulletDust: {fileID: 5908123101269321288}
   Gunshot: {fileID: 8300000, guid: 24ad853d2f7d8504195bbce9040e2ee9, type: 3}
@@ -1028,8 +1028,8 @@ MonoBehaviour:
   MuzzleLeft: {fileID: 60981874957016230}
   MuzzleDown: {fileID: 6439600725244679825}
   MuzzleUp: {fileID: 7786282316373004046}
-  bulletSpeed: 100
-  damage: 1000
+  bulletSpeed: 200
+  damage: 15
 --- !u!50 &6803972729070696194
 Rigidbody2D:
   serializedVersion: 5
@@ -1197,7 +1197,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6336577958696275642}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -1779,6 +1779,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2206104355004806732}
     m_Modifications:
+    - target: {fileID: 4803908781951172517, guid: 2142c56973bee7a43a612ad0d9b103e1, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4803908781951172517, guid: 2142c56973bee7a43a612ad0d9b103e1, type: 3}
       propertyPath: m_Color.a
       value: 1

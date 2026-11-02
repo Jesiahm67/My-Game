@@ -28,7 +28,7 @@ public class Playerscript : MonoBehaviour
     public TextMeshPro Timer;
     [Header("Score")]
     public int ZombiesKilled = 0;
-
+    // Kills goals to unlock goals
     [Header("Kill Goals")]
     public int SecretExitKills = 25;
     public int LevelExitKills = 55;
@@ -47,7 +47,7 @@ public class Playerscript : MonoBehaviour
 
     // Movement Section
     [Header("Movement")]
-    public float MaxSpeed = 15f;
+    public float MaxSpeed = 30f;
     public float Speed;
     // Sprint Speed multiplier
     public float SprintMultiplier = 2f;
@@ -137,7 +137,7 @@ public class Playerscript : MonoBehaviour
         UpdateHealth();
 
         string currentScene = SceneManager.GetActiveScene().name;    
-
+        // Kills for secret exit and normal exit to unlock
         switch (currentScene)
         {
             case "Level 1":
@@ -160,6 +160,7 @@ public class Playerscript : MonoBehaviour
                 LevelExitKills = 30;// Needed to leave the secrate level
                 break;
         }
+        // If exit kills don't reach then the door does not unlock
         if (SecretExit != null)
         {
             SecretExit.SetActive(false);
@@ -175,6 +176,7 @@ public class Playerscript : MonoBehaviour
         }
     }
 
+    //Cloud Code//
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Helps Bounce off clouds
@@ -228,7 +230,7 @@ public class Playerscript : MonoBehaviour
 
         }
     }
-    
+    // Add kills to the kill count score
     public void AddKill()
     {
         ZombiesKilled++;
@@ -238,7 +240,7 @@ public class Playerscript : MonoBehaviour
             ZombieKillText.text = "Kills: " + ZombiesKilled + "/" + LevelExitKills;
         }        
         string scene = SceneManager.GetActiveScene().name;
-
+        // To help save zombie kill count
         switch (scene)
         {
             case "Level 1":
@@ -422,6 +424,7 @@ public class Playerscript : MonoBehaviour
         }
         SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale,10f * Time.deltaTime);
     }
+    // Gun visibility here
     private void GunVisibility()
     {
         if (GunSR == null)
@@ -461,7 +464,7 @@ public class Playerscript : MonoBehaviour
         Vector2 velocity = Vector2.right * bulletSpeed;
 
         float bulletRotation = 0f;
-
+        // Shows which way the muzzle, gunsnoke, gun and bullet directions depending on arrow keys and player direction
         switch (currentDirection)
         {
             case ShootDirection.Left:

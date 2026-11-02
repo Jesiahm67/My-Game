@@ -10,7 +10,8 @@ public static class GameData
     public static int Level2Kills = 0;
     public static int Level3Kills = 0;
     public static int SecretLevelKills = 0;
-    internal static bool ReturningFromSecretLevel;
+    public static bool ReturningFromSecretLevel = false;
+    public static Vector3 ReturnPosition;
 
     public static void ResetData()
         {
