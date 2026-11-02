@@ -799,7 +799,7 @@ Camera:
   far clip plane: 100
   field of view: 160
   orthographic: 1
-  orthographic size: 50
+  orthographic size: 55
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   MuzzleDown: {fileID: 6439600725244679825}
   MuzzleUp: {fileID: 7786282316373004046}
   bulletSpeed: 100
-  damage: 10
+  damage: 1000
 --- !u!50 &6803972729070696194
 Rigidbody2D:
   serializedVersion: 5
@@ -1197,13 +1197,13 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6336577958696275642}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: aed27d8de561c6e46bc347bbbbf04eec, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.851
   m_Pitch: 1
   Loop: 1
   Mute: 0
