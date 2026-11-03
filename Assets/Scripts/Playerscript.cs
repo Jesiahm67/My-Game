@@ -84,8 +84,8 @@ public class Playerscript : MonoBehaviour
     public Transform MuzzleUp;
     public float bulletSpeed = 40f;
     public float damage = 15f;
-    private float GunVisibilityTime = 2f;
-    private float GunFadingSpeed = 3f;
+    private readonly float GunVisibilityTime = 2f;
+    private readonly float GunFadingSpeed = 3f;
     private float GunTimer;
     private Color GunColor;
     private Vector3 gunStartposition;
@@ -498,7 +498,7 @@ public class Playerscript : MonoBehaviour
         // Velocity Section
         if (bullet.TryGetComponent<Rigidbody2D>(out var bulletRb))
         {
-            //Horizontal Velocity/Speed //
+            // Shows Horizontal Velocity/Speed of the bullet //
             bulletRb.linearVelocity = velocity;// 0f Means no vertical movement//
             //Add vertical movement later//
         }

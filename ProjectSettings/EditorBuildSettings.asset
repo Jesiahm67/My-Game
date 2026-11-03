@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Title screen.unity
     guid: ec0e9f86cdd75f044868a603e036d3b1
   - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: f15781505e148ba4dbb475667078b0b6
+  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: fde29dceb15d3134a9e6be87ece80452
-  - enabled: 1
-    path: Assets/Scenes/Victory.unity
-    guid: aa7a0bd68d9e87448bf6eb8824e17f03
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: 2cda990e2423bbf4892e6590ba056729
@@ -27,11 +27,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Secret Level.unity
     guid: 0a52dc97b3cf64449a146aeb5ecdd39f
   - enabled: 1
+    path: Assets/Scenes/Victory.unity
+    guid: aa7a0bd68d9e87448bf6eb8824e17f03
+  - enabled: 1
     path: Assets/Scenes/Game Over.unity
     guid: 55407704a590b1a4b8f5e9f917fd709f
-  - enabled: 1
-    path: Assets/Scenes/Settings.unity
-    guid: f15781505e148ba4dbb475667078b0b6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

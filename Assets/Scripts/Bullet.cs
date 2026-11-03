@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -14,7 +13,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        // Ignore other bullets
+        // Ignores colliding with the other bullets///
         if (other.gameObject.layer == LayerMask.NameToLayer("Bullet"))
         {
             return;

@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class Title : MonoBehaviour
 {
-    public void Titlescreen()
+    void Update()
     {
-        SceneManager.LoadScene("Title screen");
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("Title Screen");
+        }
     }
 }
 
