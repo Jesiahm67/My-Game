@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   zombiePrefab: {fileID: 4753505186210618731, guid: 5af03a05ab09a4e4f97ace04b4c8ba7b, type: 3}
   ZombieSpawnPoint: {fileID: 1809115377296310193}
-  spawnTime: 0.9
+  spawnTime: 0.5
   maxZombies: 10
   zombiesPerPortal: 10
   activationDistance: 60

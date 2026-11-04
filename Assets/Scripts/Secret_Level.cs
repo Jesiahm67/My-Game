@@ -25,7 +25,7 @@ public class Secret_Level : MonoBehaviour
 
         Playerscript player = other.GetComponent<Playerscript>();
 
-        if (player.ZombiesKilled < player.SecretExitKills)
+        if (player.ZombiesKilled < player.SecretExitKillsCount)
         {
             Debug.Log("Secret Exit Locked!");
             return;

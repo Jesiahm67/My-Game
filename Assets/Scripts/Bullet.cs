@@ -10,30 +10,19 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D  other)
     {
-
-        // Ignores colliding with the other bullets///
         if (other.gameObject.layer == LayerMask.NameToLayer("Bullet"))
         {
             return;
         }
-        //Hits zombie
-        if(other.TryGetComponent<Zombie>(out var zombie))
+        if( other.TryGetComponent<Zombie>(out var zombie))
         {
             zombie.Damage((int)damage);
             Destroy(gameObject);
             return;
         }
-        if (other.CompareTag("Ground"))
-        {
-            Destroy(gameObject);
-        }
-        if (other.CompareTag("Secret Exit"))
-        {
-            Destroy(gameObject);
-        }
-        if (other.CompareTag("Finish"))
+        if (other. CompareTag("Ground"))
         {
             Destroy(gameObject);
         }

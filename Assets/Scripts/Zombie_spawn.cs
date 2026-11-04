@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-
 public class ZombiePortalSpawner : MonoBehaviour
 {
     public GameObject zombiePrefab;

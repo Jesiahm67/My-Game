@@ -997,30 +997,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3969a3206940505408a1ad806a7f6db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Playerscript
-  AudioSource: {fileID: 4478086911629887276}
-  ZombieKillText: {fileID: 2391207350688178817}
+  PlayerAudioSource: {fileID: 4478086911629887276}
+  ZombieDeathText: {fileID: 2391207350688178817}
   Maximum_Health: 100
   Health: 0
   HealthText: {fileID: 2818139025288725209}
-  Gaming_Time: 180
+  Gaming_Time: 300
   Timer: {fileID: 4807619113655376840}
   ZombiesKilled: 0
-  SecretExitKills: 25
-  LevelExitKills: 55
+  SecretExitKillsCount: 25
+  LevelExitKillCount: 55
   SecretExit: {fileID: 0}
   LevelExit: {fileID: 0}
   SR: {fileID: 2758407236198761000}
   GunSR: {fileID: 8445708476354419195}
-  MaxSpeed: 30
-  Speed: 0
-  SprintMultiplier: 2
-  MaxJumpingForce: 50
+  MaxSpeed: 20
+  NormalSpeed: 0
+  SprintAccelerator: 2.5
+  MaxJumpingForce: 30
   JumpingForce: 0
   JumpDust: {fileID: 9191571888414913133}
   JumpSound: {fileID: 8300000, guid: 52716d0c4655fcd44a5894197a19832f, type: 3}
-  CloudFloatingForce: 10
-  CloudFloatingDuation: 2
-  bulletPrefab: {fileID: 8246016202531862030, guid: f8ea92c4c7b38fb48ba80a1f3f9467ad, type: 3}
+  CloudFloatingflight: 0
+  CloudFloatingDuatin: 0
+  bulletPrefabHere: {fileID: 8246016202531862030, guid: f8ea92c4c7b38fb48ba80a1f3f9467ad, type: 3}
   BulletDust: {fileID: 5908123101269321288}
   Gunshot: {fileID: 8300000, guid: 24ad853d2f7d8504195bbce9040e2ee9, type: 3}
   gun: {fileID: 4653405537233855407}
@@ -1028,8 +1028,8 @@ MonoBehaviour:
   MuzzleLeft: {fileID: 60981874957016230}
   MuzzleDown: {fileID: 6439600725244679825}
   MuzzleUp: {fileID: 7786282316373004046}
-  bulletSpeed: 200
-  damage: 15
+  bulletSpeed: 40
+  damage: 20
 --- !u!50 &6803972729070696194
 Rigidbody2D:
   serializedVersion: 5

@@ -3,57 +3,49 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-// Automatically adds a Rigidbody2D if one is missing
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AudioSource))]
 
 public class Playerscript : MonoBehaviour
 {
-    // Event fired when the player dies
     public static event Action Death;
+    public AudioSource PlayerAudioSource;
+    public TextMeshPro ZombieDeathText;
 
-    // Displays the player's Health on screen
-    public AudioSource AudioSource;
-    public TextMeshPro ZombieKillText;
- 
-    // Health Part //
     [Header("Health")]
     public int Maximum_Health = 100;
     public int Health;
     public TextMeshPro HealthText;
 
     [Header("Time")]
-    public float Gaming_Time = 180f;
+    public float Gaming_Time = 300f;
     private bool Times_Up = false;
     public TextMeshPro Timer;
+
     [Header("Score")]
     public int ZombiesKilled = 0;
-    // Kills goals to unlock goals
+
     [Header("Kill Goals")]
-    public int SecretExitKills = 25;
-    public int LevelExitKills = 55;
+    public int SecretExitKillsCount = 25;
+    public int LevelExitKillCount = 55;
     public GameObject SecretExit;
     public GameObject LevelExit;
-    private bool secretExitUnlocked;
-    private bool LevelExitUnlocked;
+    private bool issecretExitUnlocked;
+    private bool isLevelExitUnlocked;
 
 
-    // Prevents movement and actions after death
-    public bool IsDead { get; private set; }
-    // Sprites Part //
+    public bool AreuDead { get; private set; }
+
     [Header("Components")]
     public SpriteRenderer SR;
     public SpriteRenderer GunSR;
 
-    // Movement Section
     [Header("Movement")]
-    public float MaxSpeed = 30f;
-    public float Speed;
-    // Sprint Speed multiplier
-    public float SprintMultiplier = 2f;
+    public float MaxSpeed = 20f;
+    public float NormalSpeed;
+    public float SprintAccelerator = 2.5f;
 
 
-    // Jumping Section
 
     [Header("Jumping")]
     public float MaxJumpingForce = 50f;
@@ -63,18 +55,15 @@ public class Playerscript : MonoBehaviour
 
     private Vector3 normalScale;
 
-    // Cloud Bounce Section
 
     [Header("Cloud Bounce")]
-    public float CloudFloatingForce; // Vertical velocity while floating midair
-    public float CloudFloatingDuation; // How long the player floats for
-    private bool IsFloating; // Sees if the player is floating
-    private float FloatTimer;// Timer for floating
+    public float CloudFloatingflight; 
+    public float CloudFloatingDuatin;
+    private bool IsthePlayerFloating;
+    private float floatime;
 
-
-    // Gun
     [Header("Pistol")]
-    public GameObject bulletPrefab;
+    public GameObject bulletPrefabHere;
     public ParticleSystem BulletDust;
     public AudioClip Gunshot;
     public Transform gun;
@@ -82,42 +71,35 @@ public class Playerscript : MonoBehaviour
     public Transform MuzzleLeft;
     public Transform MuzzleDown;
     public Transform MuzzleUp;
-    public float bulletSpeed = 40f;
-    public float damage = 15f;
+    public float bulletSpeed = 200f;
+    public float damage = 20f;
     private readonly float GunVisibilityTime = 2f;
     private readonly float GunFadingSpeed = 3f;
     private float GunTimer;
     private Color GunColor;
     private Vector3 gunStartposition;
-    private enum ShootDirection {Left, Right, Up, Down}
+    private enum ShootDirection { Left, Right, Up, Down }
     private ShootDirection currentDirection = ShootDirection.Right;
 
-
-
-    // Physics private components
     private Rigidbody2D Rigidbody;
 
-    // Double jump system
-    private int RemainingJumps;
-    private const int MaxJumps = 2;
+    private int Jumpsleft;
+    private const int MaxJumpsleft = 2;
 
     public void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
 
-        // Shows player stats
         Health = Maximum_Health;
-        Speed = MaxSpeed;
+        NormalSpeed = MaxSpeed;
         JumpingForce = MaxJumpingForce;
         normalScale = SR.transform.localScale;
         gunStartposition = gun.localPosition;
-        // Allow double jumps
-        RemainingJumps = MaxJumps;
 
-        // Player starts off alive
-        IsDead = false;
+        Jumpsleft = MaxJumpsleft;
 
-        // Automatically find SpriteRenderer if it is not assigned
+        AreuDead = false;
+
         if (SR == null)
         {
             SR = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
@@ -125,42 +107,39 @@ public class Playerscript : MonoBehaviour
         if (GunSR != null)
         {
             GunColor = GunSR.color;
-            //Starts off hidden until clicking the f key
             GunColor.a = 0f;
             GunSR.color = GunColor;
         }
-        if (AudioSource == null)
+        if (PlayerAudioSource == null)
         {
-            AudioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+            PlayerAudioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
         }
 
         UpdateHealth();
 
-        string currentScene = SceneManager.GetActiveScene().name;    
-        // Kills for secret exit and normal exit to unlock
+        string currentScene = SceneManager.GetActiveScene().name;
         switch (currentScene)
         {
             case "Level 1":
                 ZombiesKilled = GameData.Level1Kills;
-                SecretExitKills = 30;
-                LevelExitKills = 55;
+                SecretExitKillsCount = 30;
+                LevelExitKillCount = 55;
                 break;
             case "Level 2":
                 ZombiesKilled = GameData.Level2Kills;
-                SecretExitKills = 60;
-                LevelExitKills = 65;
+                SecretExitKillsCount = 60;
+                LevelExitKillCount = 65;
                 break;
             case "Level 3":
                 ZombiesKilled = GameData.Level3Kills;
-                SecretExitKills = 70;
-                LevelExitKills = 75;
+                SecretExitKillsCount = 70;
+                LevelExitKillCount = 75;
                 break;
             case "Secret Level":
                 ZombiesKilled = GameData.SecretLevelKills;
-                LevelExitKills = 30;// Needed to leave the secrate level
+                LevelExitKillCount = 30;
                 break;
         }
-        // If exit kills don't reach then the door does not unlock
         if (SecretExit != null)
         {
             SecretExit.SetActive(false);
@@ -170,53 +149,48 @@ public class Playerscript : MonoBehaviour
             LevelExit.SetActive(false);
         }
 
-        if (ZombieKillText != null)
+        if (ZombieDeathText != null)
         {
-            ZombieKillText.text = "Kills: 0/" + LevelExitKills;
+            ZombieDeathText.text = "Kills: 0/" + LevelExitKillCount;
         }
     }
 
-    //Cloud Code//
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Helps Bounce off clouds
         if (collision.gameObject.CompareTag("Cloud"))
         {
             Debug.Log("Touched Cloud!");
-            IsFloating = true;
-            FloatTimer = CloudFloatingDuation;
-                
-            RemainingJumps = MaxJumps;
+            IsthePlayerFloating = true;
+            floatime = CloudFloatingDuatin;
+
+            Jumpsleft = MaxJumpsleft;
             return;
         }
 
-        // Reset jumps when standing on ground/platforms
         foreach (ContactPoint2D contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
             {
-                RemainingJumps = MaxJumps;
+                Jumpsleft = MaxJumpsleft;
                 break;
             }
         }
     }
 
-    // This is called when the player takes damage
     public void Damage(int damage)
     {
-        if (IsDead)
+        if (AreuDead )
             return;
 
         Health = Mathf.Max(0, Health - damage);
 
         UpdateHealth();
 
-        Debug.Log("Health: "+ Health);
+        Debug.Log("Health: " + Health);
 
-        // Handles how the player dies 
         if (Health == 0)
         {
-            IsDead = true;
+            AreuDead = true;
 
             if (SR != null)
             {
@@ -230,17 +204,15 @@ public class Playerscript : MonoBehaviour
 
         }
     }
-    // Add kills to the kill count score
     public void AddKill()
     {
         ZombiesKilled++;
 
-        if (ZombieKillText != null)
+        if (ZombieDeathText != null)
         {
-            ZombieKillText.text = "Kills: " + ZombiesKilled + "/" + LevelExitKills;
-        }        
+            ZombieDeathText.text = "Kills: " + ZombiesKilled + "/" + LevelExitKillCount;
+        }
         string scene = SceneManager.GetActiveScene().name;
-        // To help save zombie kill count
         switch (scene)
         {
             case "Level 1":
@@ -257,20 +229,18 @@ public class Playerscript : MonoBehaviour
                 break;
         }
 
-        // Unlock Secret Exit//
-        if (!secretExitUnlocked && ZombiesKilled >= SecretExitKills)
+        if (!issecretExitUnlocked && ZombiesKilled >= SecretExitKillsCount)
         {
-            secretExitUnlocked = true;
+            issecretExitUnlocked = true;
             Debug.Log("Secret Exit Unlocked!");
             if (SecretExit != null)
             {
                 SecretExit.SetActive(true);
             }
         }
-        // Unlock Normal Exit
-        if (!LevelExitUnlocked && ZombiesKilled >= LevelExitKills)
+        if (!isLevelExitUnlocked && ZombiesKilled >= LevelExitKillCount)
         {
-            LevelExitUnlocked = true;
+            isLevelExitUnlocked = true;
             Debug.Log("Level Exit Unlocked!");
             if (LevelExit != null)
             {
@@ -280,7 +250,7 @@ public class Playerscript : MonoBehaviour
     }
     private void Game_Over()
     {
-        IsDead = true;
+        AreuDead = true;
         SceneManager.LoadScene("Game Over");
     }
     public void Update()
@@ -288,7 +258,7 @@ public class Playerscript : MonoBehaviour
         if (!Times_Up)
         {
             Gaming_Time -= Time.deltaTime;
-            if (Gaming_Time <= 0 )
+            if (Gaming_Time <= 0)
             {
                 Gaming_Time = 0;
                 Times_Up = true;
@@ -299,21 +269,21 @@ public class Playerscript : MonoBehaviour
         {
             Timer.text = "Time: " + Mathf.CeilToInt(Gaming_Time);
         }
-        if (IsFloating)
+        if (IsthePlayerFloating)
         {
-            FloatTimer -= Time.deltaTime;
+            floatime -= Time.deltaTime;
 
             Rigidbody.linearVelocity = new Vector2(
                 Rigidbody.linearVelocity.x,
-                CloudFloatingForce);
-            if (FloatTimer <= 0f)
+                CloudFloatingflight);
+            if (floatime <= 0f)
             {
-                IsFloating = false;
+                IsthePlayerFloating = false;
             }
         }
         GunVisibility();
-        
-        if (IsDead)
+
+        if (AreuDead)
             return;
 
         if (Keyboard.current == null)
@@ -321,7 +291,6 @@ public class Playerscript : MonoBehaviour
 
         float moveX = 0f;
 
-        // Move left and flip sprites connected to player
         if (Keyboard.current.leftArrowKey.isPressed)
         {
             moveX -= 1f;
@@ -330,13 +299,12 @@ public class Playerscript : MonoBehaviour
             GunSR.flipX = true;
             gun.rotation = Quaternion.Euler(0, 0, 0);
             currentDirection = ShootDirection.Left;
-            gun.localPosition = 
+            gun.localPosition =
                 new Vector3(
-                -Mathf.Abs(gunStartposition.x), 
-                gunStartposition.y, 
+                -Mathf.Abs(gunStartposition.x),
+                gunStartposition.y,
                 gunStartposition.z);
         }
-        // Move right and flip sprites connected to the player
         if (Keyboard.current.rightArrowKey.isPressed)
         {
             moveX += 1f;
@@ -346,85 +314,77 @@ public class Playerscript : MonoBehaviour
             currentDirection = ShootDirection.Right;
             gun.localPosition =
                 new Vector3(
-                Mathf.Abs(gunStartposition.x), 
-                gunStartposition.y, 
+                Mathf.Abs(gunStartposition.x),
+                gunStartposition.y,
                 gunStartposition.z);
         }
-        // flips gun to go down
+
         if (Keyboard.current.downArrowKey.isPressed)
         {
             GunSR.flipX = false;
             gun.rotation = Quaternion.Euler(0, 0, -90);
-            
+
             gun.localPosition =
                 new Vector3(
-                0f, 
+                0f,
                 -Mathf.Abs(gunStartposition.y),
                 gunStartposition.z);
             currentDirection = ShootDirection.Down;
         }
-        // flips gun to go up
+
         if (Keyboard.current.upArrowKey.isPressed)
         {
             GunSR.flipX = false;
             gun.rotation = Quaternion.Euler(0, 0, 90);
-            
             gun.localPosition =
                 new Vector3(
-                0f, 
+                0f,
                 Mathf.Abs(gunStartposition.y),
                 gunStartposition.z);
             currentDirection = ShootDirection.Up;
         }
-        // Apply sprint multiplier when sprinting
-        float currentSpeed = Speed;
-
+        float currentSpeed = NormalSpeed;
         if (Keyboard.current.shiftKey.isPressed)
         {
-            currentSpeed *= SprintMultiplier;
+            currentSpeed *= SprintAccelerator;
         }
-
-        // Controls the movement Speed
         Rigidbody.linearVelocity = new Vector2(
             moveX * currentSpeed,
             Rigidbody.linearVelocity.y
         );
 
-        // Jump / double jump
         if (Keyboard.current.spaceKey.wasPressedThisFrame &&
-            RemainingJumps > 0)
+            Jumpsleft > 0)
         {
             Rigidbody.linearVelocity = new Vector2(
                 Rigidbody.linearVelocity.x,
                 JumpingForce
             );
             SR.transform.localScale = new Vector3(normalScale.x * 0.95f, normalScale.y * 1.05f, normalScale.z);
-            RemainingJumps--;
+            Jumpsleft--;
 
             if (JumpDust != null)
             {
                 JumpDust.Play();
             }
-            if (AudioSource != null && JumpSound != null)
+            if (PlayerAudioSource != null && JumpSound != null)
             {
-                AudioSource.PlayOneShot(JumpSound);
+                PlayerAudioSource.PlayOneShot(JumpSound);
             }
         }
 
-        // Shoot when F is pressed
         if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             GunTimer -= Time.deltaTime;
             Shoot();
             GunTimer = 3;
-            if (AudioSource != null && Gunshot != null)
+            if (PlayerAudioSource != null && Gunshot != null)
             {
-                AudioSource.PlayOneShot(Gunshot);
+                PlayerAudioSource.PlayOneShot(Gunshot);
             }
         }
-        SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale,10f * Time.deltaTime);
+        SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale, 10f * Time.deltaTime);
     }
-    // Gun visibility here
     private void GunVisibility()
     {
         if (GunSR == null)
@@ -432,7 +392,6 @@ public class Playerscript : MonoBehaviour
         if (GunTimer > 0f)
         {
             GunTimer -= Time.deltaTime;
-            //Fades in
             GunColor.a = Mathf.Lerp(GunColor.a, 1f, GunFadingSpeed * Time.deltaTime);
             GunSR.color = GunColor;
         }
@@ -442,7 +401,6 @@ public class Playerscript : MonoBehaviour
             GunSR.color = GunColor;
         }
     }
-    // Updates the Health text UI
     public void UpdateHealth()
     {
         if (HealthText != null)
@@ -450,59 +408,48 @@ public class Playerscript : MonoBehaviour
             HealthText.text = "Health: " + Health;
         }
     }
-    // Creates a bullet and fires to it's target
-    //Find Damage limit for zombies
     private void Shoot()
     {
         GunTimer = GunVisibilityTime;
         GunColor.a = 1f;
         GunSR.color = GunColor;
-        if (bulletPrefab == null || gun == null)
+        if (bulletPrefabHere == null || gun == null)
             return;
-        //Shows which way to help shoot the bullets depending on the way the characher is facing//
-        Vector3 spawnPosition = MuzzleRight.position;
-        Vector2 velocity = Vector2.right * bulletSpeed;
-
-        float bulletRotation = 0f;
-        // Shows which way the muzzle, gunsnoke, gun and bullet directions depending on arrow keys and player direction
+        Vector3 spawnPoint = MuzzleRight.position;
+        Vector2 Speed = Vector2.right * bulletSpeed;
+        float bulletRotatin = 0f;
         switch (currentDirection)
-        {
-            case ShootDirection.Left:
-                spawnPosition = MuzzleLeft.position;
-                bulletRotation = 0f;
-                velocity = Vector2.left * bulletSpeed;
-                break;
-
-            case ShootDirection.Right:
-                spawnPosition = MuzzleRight.position;
-                bulletRotation = 180f;
-                velocity = Vector2.right * bulletSpeed;
+        {   case ShootDirection.Up:
+                bulletRotatin = 90f;
+                spawnPoint = MuzzleUp.position;
+                Speed = Vector2.up *bulletSpeed;
                 break;
 
             case ShootDirection.Down:
-                bulletRotation = -90f;
-                spawnPosition = MuzzleDown.position;
-                velocity = Vector2.down * bulletSpeed;
+                bulletRotatin = -90f;
+                spawnPoint = MuzzleDown.position;
+                Speed = Vector2.down *bulletSpeed;
                 break;
 
-            case ShootDirection.Up:
-                bulletRotation = 90f;
-                spawnPosition = MuzzleUp.position;
-                velocity = Vector2.up * bulletSpeed;
+            case ShootDirection.Left:
+                spawnPoint = MuzzleLeft.position;
+                bulletRotatin = 0f;
+                Speed = Vector2.left *bulletSpeed;
+                break;
+
+            case ShootDirection.Right:
+                spawnPoint = MuzzleRight.position;
+                bulletRotatin = 180f;
+                Speed = Vector2.right *bulletSpeed;
                 break;
         }
-        BulletDust.transform.position = spawnPosition;
+        BulletDust.transform.position=spawnPoint;
         BulletDust.Play();
-        //Creates a new bullet after the first one//
-        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.Euler(0,0, bulletRotation));
-        // Velocity Section
+        GameObject bullet = Instantiate(bulletPrefabHere, spawnPoint, Quaternion.Euler(0, 0, bulletRotatin));
         if (bullet.TryGetComponent<Rigidbody2D>(out var bulletRb))
         {
-            // Shows Horizontal Velocity/Speed of the bullet //
-            bulletRb.linearVelocity = velocity;// 0f Means no vertical movement//
-            //Add vertical movement later//
+            bulletRb.linearVelocity = Speed;
         }
-        // flips the bullet sprite dependeing on player x axis
         if (bullet.TryGetComponent<Bullet>(out var bulletScript))
         {
             bulletScript.damage = damage;

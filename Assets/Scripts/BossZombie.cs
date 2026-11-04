@@ -4,11 +4,11 @@ using UnityEngine;
 public class BossZombie : MonoBehaviour
 {
     [Header("Stats")]
-    public int damage = 5;
+    public int damage = 35;
     public float attackCooldown = 1f;
     private float nextAttackTime;
     public int health = 100;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 7.5f;
     public float stopDistance = 1f;
     private Rigidbody2D rb;
     private Playerscript player;
@@ -24,7 +24,7 @@ public class BossZombie : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (player == null || player.IsDead)
+        if (player == null || player.AreuDead)
         {
             rb.linearVelocity = Vector2.zero;
             return;

@@ -8,7 +8,7 @@ public class Zombie : MonoBehaviour
     public float attackCooldown = 1f;
     private float nextAttackTime;
     public int health = 20;
-    public float moveSpeed = 10f;
+    public float moveSpeed = 15f;
     public float stopDistance = 1f;
     private Rigidbody2D rb;
     private Playerscript player;
@@ -24,7 +24,7 @@ public class Zombie : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (player == null || player.IsDead)
+        if (player == null || player.AreuDead)
         {
             rb.linearVelocity = Vector2.zero;
             return;

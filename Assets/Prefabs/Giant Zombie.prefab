@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6907108614297191693}
   - component: {fileID: 9034553724737196348}
   - component: {fileID: 5990912933667412246}
-  - component: {fileID: 3218856974029570935}
   - component: {fileID: 5013636805593240817}
   - component: {fileID: -7634866500575907481}
   m_Layer: 9
@@ -122,23 +121,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &3218856974029570935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3960903504431201149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af2099b617fe2d44cb287507a590191c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Follow
-  damage: 15
-  attackCooldown: 3
-  health: 100
-  moveSpeed: 10
-  stopDistance: 1
 --- !u!58 &5013636805593240817
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -186,9 +168,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a53d78a9a156e94fb1b7d09defa36e4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::BossZombie
   damage: 5
   attackCooldown: 1
-  health: 10
-  moveSpeed: 3
+  health: 100
+  moveSpeed: 5
   stopDistance: 1

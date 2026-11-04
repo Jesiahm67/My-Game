@@ -3032,10 +3032,6 @@ PrefabInstance:
       propertyPath: SecretExit
       value: 
       objectReference: {fileID: 2129956098}
-    - target: {fileID: 3517661055781543127, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
-      propertyPath: ZombiesKilled
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 6336577958696275642, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: m_Name
       value: Player
