@@ -2191,6 +2191,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3517661055781543127, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
+      propertyPath: LevelExit
+      value: 
+      objectReference: {fileID: 1932904580}
+    - target: {fileID: 3517661055781543127, guid: e583645ec31d0e04e8df30763ed09a29, type: 3}
       propertyPath: bulletDust
       value: 
       objectReference: {fileID: 651973097}
@@ -2935,6 +2939,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f95f268084901fe46a5aec9457bdbae6, type: 3}
+--- !u!1 &1932904580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8954537374109260883, guid: f95f268084901fe46a5aec9457bdbae6, type: 3}
+  m_PrefabInstance: {fileID: 1932904579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2073520366
 PrefabInstance:
   m_ObjectHideFlags: 0
