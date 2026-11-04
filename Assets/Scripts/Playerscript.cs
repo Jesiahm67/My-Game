@@ -373,7 +373,7 @@ public class Playerscript : MonoBehaviour
             }
         }
 
-        if (Keyboard.current.fKey.wasPressedThisFrame)
+        if (Keyboard.current.sKey.wasPressedThisFrame)
         {
             GunTimer -= Time.deltaTime;
             Shoot();

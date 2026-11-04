@@ -1,2 +1,29 @@
 fileFormatVersion: 2
 guid: 3969a3206940505408a1ad806a7f6db5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PlayerAudioSource: {instanceID: 0}
+  - ZombieDeathText: {instanceID: 0}
+  - HealthText: {instanceID: 0}
+  - Timer: {instanceID: 0}
+  - SecretExit: {instanceID: 0}
+  - LevelExit: {instanceID: 0}
+  - SR: {instanceID: 0}
+  - GunSR: {instanceID: 0}
+  - JumpDust: {instanceID: 0}
+  - JumpSound: {instanceID: 0}
+  - bulletPrefabHere: {instanceID: 0}
+  - BulletDust: {instanceID: 0}
+  - Gunshot: {instanceID: 0}
+  - gun: {instanceID: 0}
+  - MuzzleRight: {instanceID: 0}
+  - MuzzleLeft: {instanceID: 0}
+  - MuzzleDown: {instanceID: 0}
+  - MuzzleUp: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

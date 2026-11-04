@@ -132,10 +132,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af2099b617fe2d44cb287507a590191c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Follow
+  m_EditorClassIdentifier: Assembly-CSharp::Zombie
   damage: 5
   attackCooldown: 1
-  health: 15
+  health: 20
   moveSpeed: 15
   stopDistance: 1
 --- !u!58 &-8390787625663626993

@@ -169,8 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a53d78a9a156e94fb1b7d09defa36e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossZombie
-  damage: 5
+  damage: 35
   attackCooldown: 1
   health: 100
-  moveSpeed: 5
+  moveSpeed: 7.5
   stopDistance: 1
