@@ -7,7 +7,6 @@ TagManager:
   - Ground
   - Gun
   - Bullet
-  - platform
   - Hazard
   - Cloud
   - Zombie
@@ -16,6 +15,7 @@ TagManager:
   - Zombie Portal
   - Boss Portal
   - SmokeFire
+  - platform
   layers:
   - Default
   - TransparentFX

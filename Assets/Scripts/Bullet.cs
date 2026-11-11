@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    private void OnTriggerEnter2D(Collider2D  other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Bullet"))
         {
@@ -19,6 +19,12 @@ public class Bullet : MonoBehaviour
         if( other.TryGetComponent<Zombie>(out var zombie))
         {
             zombie.Damage((int)damage);
+            Destroy(gameObject);
+            return;
+        }
+        if (other.TryGetComponent<BossZombie>(out var boss))
+        {
+            boss.Damage((int)damage);
             Destroy(gameObject);
             return;
         }

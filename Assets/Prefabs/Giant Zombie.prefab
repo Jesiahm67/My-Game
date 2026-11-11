@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6907108614297191693
 Transform:
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 27d960afbd61b834182c9c76ddfe0a1f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

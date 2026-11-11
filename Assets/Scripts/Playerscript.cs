@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,7 @@ public class Playerscript : MonoBehaviour
     public float Gaming_Time = 300f;
     private bool Times_Up = false;
     public TextMeshPro Timer;
+    public float Shootimer;
 
     [Header("Score")]
     public int ZombiesKilled = 0;
@@ -81,6 +83,15 @@ public class Playerscript : MonoBehaviour
     private enum ShootDirection { Left, Right, Up, Down }
     private ShootDirection currentDirection = ShootDirection.Right;
 
+    [Header("Ammo")]
+    public int Magazine = 20;
+    public int currentAmmo;
+    public float reloadTime = 1.5f;
+    private bool IsReloading;
+
+    public TextMeshPro AmmoText;
+
+
     private Rigidbody2D Rigidbody;
 
     private int Jumpsleft;
@@ -95,6 +106,10 @@ public class Playerscript : MonoBehaviour
         JumpingForce = MaxJumpingForce;
         normalScale = SR.transform.localScale;
         gunStartposition = gun.localPosition;
+
+        currentAmmo = Magazine;
+        AmmoUpdateUI();
+
 
         Jumpsleft = MaxJumpsleft;
 
@@ -153,6 +168,15 @@ public class Playerscript : MonoBehaviour
         {
             ZombieDeathText.text = "Kills: 0/" + LevelExitKillCount;
         }
+
+    }
+    private void AmmoUpdateUI()
+    {
+        if (AmmoText != null)
+        {
+            AmmoText.text = "Ammo: " + currentAmmo;
+        }
+    
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -375,14 +399,29 @@ public class Playerscript : MonoBehaviour
 
         if (Keyboard.current.sKey.wasPressedThisFrame)
         {
-            GunTimer -= Time.deltaTime;
-            Shoot();
-            GunTimer = 3;
-            if (PlayerAudioSource != null && Gunshot != null)
+            if (currentAmmo > 0)
             {
-                PlayerAudioSource.PlayOneShot(Gunshot);
+                currentAmmo--;
+                GunTimer -= Time.deltaTime;
+                Shoot();
+                GunTimer = 3;
+                if (PlayerAudioSource != null && Gunshot != null)
+                {
+                    PlayerAudioSource.PlayOneShot(Gunshot);
+                }
             }
+            else
+            {
+                Debug.Log("Reload");
+            }
+        
         }
+       
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            StartCoroutine(Reload());
+        }
+        
         SR.transform.localScale = Vector3.Lerp(SR.transform.localScale, normalScale, 10f * Time.deltaTime);
     }
     private void GunVisibility()
@@ -455,5 +494,18 @@ public class Playerscript : MonoBehaviour
             bulletScript.damage = damage;
         }
     }
-
+    private IEnumerator Reload()
+    {
+        if (IsReloading)
+            yield break;
+        if (currentAmmo == Magazine)
+            yield break;
+        IsReloading = true;
+        GunSR.color = Color.red;
+        yield return new WaitForSeconds(reloadTime);
+        currentAmmo = Magazine;
+        GunSR.color = Color.white;
+        AmmoUpdateUI();
+        IsReloading = false;
+    }
 }
